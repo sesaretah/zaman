@@ -7,7 +7,7 @@
       </div>
 
       <div class="modal-body">
-        <%= form_tag '/events', remote: true do |f| %>
+        <%= form_tag '/events', remote: true, id: 'event-form' do |f| %>
         <div class="row">
           <div class="col-md-5">
             <div class="form-group">
@@ -20,7 +20,7 @@
           <div class="col-md-10">
             <div class="form-group">
               <label class="form-label"><%=t :details%></label>
-              <%= text_field_tag :content, nil, class: "form-control"%>
+              <%= text_field_tag :content, nil, class: "form-control", required: true%>
             </div>
           </div>
         </div>
@@ -63,7 +63,7 @@
         </div>
 
       <div class="modal-footer">
-        <button type="submit" class="btn btn-secondary"><%=t :submit %></button>
+        <button type="submit" id="modal-btn" class="btn btn-secondary"><%=t :submit %></button>
       </div>
       <% end %>
     </div>

@@ -243,9 +243,8 @@ fa:
             days: 'تعداد روز'
             nights: 'تعداد شب'
             details: 'توضیحات'
-        tour:
-          start_date: 'رفت'
-          end_date: 'برگشت '
+        advertiser:
+          title: 'عنوان '
           details: 'توضیحات'
         blog:
             title: 'عنوان'
@@ -263,6 +262,11 @@ fa:
     page_gap: "&hellip;"
     previous_label: "قبلی"
     next_label: "بعدی"
+  cover_photo: 'عکس روی جلد'
+  advertiser_form: 'فرم اعلانگر'
+  new_advertisers: 'اعلانگر جدید'
+  advertisers: 'اعلانگر‌ها'
+  the_selected_time_is_not_right: 'بازه زمانی انتخاب شده صحیح نیست'
   details: 'شرح'
   event_date: 'تاریخ رخداد '
   new_event: 'رخداد جدید '

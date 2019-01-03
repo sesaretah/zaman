@@ -1,6 +1,6 @@
 <div id="date-view">
   <div class="card">
-    <div class="card-header">
+    <div class="card-header" style="min-height: 1rem;">
       <h3 class="card-title">
         <span>
           <% @jalali = JalaliDate.to_jalali(time)%>
@@ -14,9 +14,11 @@
             <%@i = 0%>
             <% (time.beginning_of_day.to_datetime.to_i .. time.end_of_day.to_datetime.to_i).step(1.hour) do |date|%>
             <tr>
-              <td class="w-1">
+              <td class="w-1 p-1">
                 <div class="tag">
-                  <%= Time.at(date).strftime("%H:%M") %>
+
+                  <span style="min-width: 25px;"><%= Time.at(date).strftime("%H:%M") %></span>
+                  <span class="tag-addon tag-warning"><i class="far fa-clock"></i></span>
                 </div>
               </td>
               <td id=<%= date%> class="cell">
@@ -40,6 +42,7 @@
         var id = jQuery(this).attr("id");
         var time = EpochToDate(id);
         $('#starts_at_hour').val(time.getHours());
+        $('#ends_at_hour').val(time.getHours());
         $('#event_modal').modal('show');
       }
     });
@@ -58,10 +61,22 @@
 
       if (startDate > endDate){
        $('#modal-error').text('<%=t :the_selected_time_is_not_right%>')
+       $('#modal-btn').attr("disabled", true);
        $('#modal-error').css('display', 'block')
      } else {
+       $('#modal-error').text('')
+       $('#modal-btn').attr("disabled", false);
        $('#modal-error').css('display', 'none')
      }
+    });
+    $('#event-form').on('submit',function (){
+      if($('#content').val()){
+
+      } else {
+        $('#modal-error').text('<%=t :the_selected_time_is_not_right%>')
+        $('#modal-btn').attr("disabled", true);
+        $('#modal-error').css('display', 'block')
+      }
     });
       </script>
     </div>

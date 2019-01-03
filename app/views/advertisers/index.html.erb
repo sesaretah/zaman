@@ -1,0 +1,8 @@
+
+<div class="row row-cards row-deck">
+  <% for advertiser in Advertiser.all%>
+  <div class="col-sm-4 col-xl-3">
+    <%= render partial: 'advertisers/advertiser_block', locals: {advertiser: advertiser}%>
+  </div>
+  <%end%>
+</div>

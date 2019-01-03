@@ -1,0 +1,54 @@
+<div class="card">
+<%= form_for(@advertiser) do |f| %>
+<div class="card-header">
+  <h3 class="card-title"><%=t :advertiser_form %></h3>
+</div>
+<% if @advertiser.errors.any? %>
+<div id="error_explanation">
+  <h2><%= pluralize(@advertiser.errors.count, "error") %> prohibited this advertiser from being saved:</h2>
+
+  <ul>
+    <% @advertiser.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+<div class="card-body">
+
+  <div class="row">
+    <div class="col-md-5">
+      <div class="form-group">
+        <%= f.label :title, class: "form-label" %>
+        <%= f.text_field :title , class: "form-control" %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-9">
+      <div class="form-group">
+        <%= f.label :details, class: "form-label" %>
+        <%= f.text_area :details , class: "form-control" %>
+      </div>
+    </div>
+  </div>
+  <%end%>
+  <div class="row">
+    <div class="col-md-12">
+      <h5 class="mt-5"><%=t :cover_photo%></h5>
+      <hr class="mt-2 mb-2"/>
+      <%= render partial: 'uploads/upload_form', locals: {item: @advertiser, ratio: '4/3', class_name: 'Advertiser', type:'advertiser_cover', max: 1}%>
+    </div>
+  </div>
+</div>
+  <div class="card-footer text-right">
+    <button id='submit-btn' type="submit" class="btn btn-primary"><%=t :submit%></button>
+  </div>
+  <script>
+  $( "#submit-btn" ).click(function() {
+    console.log('clicked');
+    $( ".<%= params[:action]%>_advertiser" ).submit();
+  });
+  </script>
+</div>
