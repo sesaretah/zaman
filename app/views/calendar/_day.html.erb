@@ -20,21 +20,49 @@
                 </div>
               </td>
               <td id=<%= date%> class="cell">
-
+                <div class="row">
+                  <% for set in @sets%>
+                  <% if set[:lead].starts_at.strftime("%H") ==  Time.at(date).strftime("%H")%>
+                  <%= render partial: 'events/event_block', locals: {set: set}%>
+                  <%end%>
+                  <%end%>
+                </div>
               </td>
             </tr>
             <%end%>
           </tbody>
-          <%= render partial: 'events/event_modal'%>
-          <script>
-          $('.cell').click(function() {
-            var id = jQuery(this).attr("id");
-            var time = EpochToDate(id);
-            $('#starts_at').val(id);
-            $('#event_modal').modal('show');
-          });
-          </script>
         </table>
       </div>
+      <%= render partial: 'events/event_modal', locals: {time: time}%>
+      <script>
+      $('.cell').click(function(e) {
+        if(e.target == this){
+        var id = jQuery(this).attr("id");
+        var time = EpochToDate(id);
+        $('#starts_at_hour').val(time.getHours());
+        $('#event_modal').modal('show');
+      }
+    });
+    $('.ends_at').change(function(e) {
+      var starts_at_hour = $('#starts_at_hour').val();
+      var starts_at_minutes = $('#starts_at_minutes').val();
+
+      var ends_at_hour = $('#ends_at_hour').val();
+      var ends_at_minutes = $('#ends_at_minutes').val();
+
+      var startTime = starts_at_hour + ':'+ starts_at_minutes;
+      var endTime = ends_at_hour + ':'+ ends_at_minutes;
+
+      var startDate = new Date("1/1/1900 " + startTime);
+      var endDate = new Date("1/1/1900 " + endTime);
+
+      if (startDate > endDate){
+       $('#modal-error').text('<%=t :the_selected_time_is_not_right%>')
+       $('#modal-error').css('display', 'block')
+     } else {
+       $('#modal-error').css('display', 'none')
+     }
+    });
+      </script>
     </div>
   </div>

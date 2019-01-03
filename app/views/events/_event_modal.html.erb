@@ -2,25 +2,71 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <i class="far fa-comments" style='vertical-align: -3px;'></i>&nbsp<%=t :new_discussion %>
+        <i class="fas fa-clock" style='padding-top: 5px;'></i>&nbsp<%=t :new_event %>
         <button type="button" class="close" data-dismiss="modal"></button>
       </div>
-      <%= form_tag '/events', remote: true do |f| %>
+
       <div class="modal-body">
+        <%= form_tag '/events', remote: true do |f| %>
         <div class="row">
-          <div class="col-md-8">
+          <div class="col-md-5">
             <div class="form-group">
-              <label class="form-label"><%=t :title %></label>
-              <%= text_field_tag :starts_at, nil,class: "form-control" %>
-              <%= text_field_tag :ends_at, nil,class: "form-control" %>
+              <label class="form-label"><%=t :event_date%>: <%= @jalali.year%>/<%= @jalali.month%>/<%= @jalali.day%></label>
             </div>
           </div>
         </div>
-      </div>
+
+        <div class="row">
+          <div class="col-md-10">
+            <div class="form-group">
+              <label class="form-label"><%=t :details%></label>
+              <%= text_field_tag :content, nil, class: "form-control"%>
+            </div>
+          </div>
+        </div>
+        <%= hidden_field_tag :event_date, time%>
+
+        <div class="row">
+          <div class="col-md-5">
+            <div class="form-group">
+              <label class="form-label"><%=t :starts_at %></label>
+              <div class="row gutters-xs">
+                <div class="col-5">
+                  <%= select_tag :starts_at_minutes, options_for_select((0..59).step(15).to_a.map{|s| ["#{s}", s]}), {class: "form-control"}%>
+                </div>
+                <div class="col-5">
+                  <%= select_tag :starts_at_hour, options_for_select((0..23).step(1).to_a.map{|s| ["#{s}", s]}), {class: "form-control"}%>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-5">
+            <div class="form-group">
+              <label class="form-label"><%=t :ends_at %></label>
+              <div class="row gutters-xs">
+                <div class="col-5">
+                  <%= select_tag :ends_at_minutes, options_for_select((0..59).step(15).to_a.map{|s| ["#{s}", s]}), {class: "form-control ends_at"}%>
+                </div>
+                <div class="col-5">
+                  <%= select_tag :ends_at_hour, options_for_select((0..23).step(1).to_a.map{|s| ["#{s}", s]}), {class: "form-control ends_at"}%>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id='modal-error' class="alert alert-danger" role="alert" style="display:none;">
+          This is a danger alert—check it out!
+        </div>
+
       <div class="modal-footer">
         <button type="submit" class="btn btn-secondary"><%=t :submit %></button>
       </div>
       <% end %>
     </div>
   </div>
+</div>
 </div>
