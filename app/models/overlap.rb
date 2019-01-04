@@ -19,7 +19,7 @@ class Overlap < ActiveRecord::Base
     if @overlaps.blank?
       @ev = Event.where(event_date: day)
     else
-      @ev = Event.where('id NOT IN (?)', Overlap.joins(:event).where(events: {event_date: '2019-01-01'}).distinct.pluck(:event_id, :overlaper_id).flatten.uniq)
+      @ev = Event.where("event_date = ? and id NOT IN (?)", day ,Overlap.joins(:event).where(events: {event_date: day}).distinct.pluck(:event_id, :overlaper_id).flatten.uniq)
     end
     for event in @ev
       g.add_vertex event.id

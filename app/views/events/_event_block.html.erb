@@ -1,17 +1,17 @@
-<div class="col-md-11">
+<div class="col-md-11 mt-1">
   <% @events= Event.where('uuid IN (?)', set[:members]).order(:starts_at)%>
   <% @starts_at = Time.at(set[:lead].starts_at).strftime("%M").to_i%>
   <% case @starts_at
   when 0
-    @mt = -25
+    @mt = -16.5
   when 15
-    @mt= -12.5
+    @mt= -8.25
   when 30
     @mt=0
   when 45
-    @mt=12.5
+    @mt=8.25
   end%>
-  <div class="card" style='position:absolute;margin-top: <%= @mt%>px; height: <%=(@events.last.ends_at - @events.first.starts_at)/3600 *50%>px; min-height: 50px;'>
+  <div class="card" style='position:absolute;margin-top: <%= @mt %>px; height: <%=(@events.last.ends_at - @events.first.starts_at)/3600 *33%>px; min-height: 32px;'>
     <div class="card-status card-status-left bg-orange">
 
     </div>

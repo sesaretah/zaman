@@ -16,7 +16,7 @@ class EventsController < ApplicationController
     end
   end
   def manage_overlaps
-    @overlaps = Event.where('uuid <> ? and starts_at <= ? and ends_at >= ?', @event.uuid ,@event.ends_at, @event.starts_at)
+    @overlaps = Event.where('event_date= ?  and uuid <> ? and starts_at <= ? and ends_at >= ?', @time.to_date, @event.uuid ,@event.ends_at, @event.starts_at)
     for overlap in @overlaps
       Overlap.create(event_id: @event.id, overlaper_id: overlap.id)
     end
