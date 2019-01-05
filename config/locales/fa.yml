@@ -238,10 +238,8 @@ fa:
             email: 'ایمیل'
             address: 'آدرس'
             about_us: 'درباره ما'
-        tour_package:
+        project:
             title: 'عنوان '
-            days: 'تعداد روز'
-            nights: 'تعداد شب'
             details: 'توضیحات'
         advertiser:
           title: 'عنوان '
@@ -262,6 +260,19 @@ fa:
     page_gap: "&hellip;"
     previous_label: "قبلی"
     next_label: "بعدی"
+  advertiser_events: 'اعلانات'
+  users: 'اعضا'
+  subscribe: 'عضویت'
+  project_form: 'فرم پروژه'
+  is_agreed: 'موافقم'
+  terms_and_policy: 'با قوانین و مقرارت'
+  new_projects: 'پروژه جدید'
+  enter_mobile: '091XXXXXXX'
+  projects: 'پروژه ها '
+  search: 'جستجو'
+  zaman: 'سامانه زمان'
+  zaman_details: 'مدیریت یکپارچه زمانبندی ها، تقویم ها و پروژه ها'
+  destroy: 'حذف'
   cover_photo: 'عکس روی جلد'
   advertiser_form: 'فرم اعلانگر'
   new_advertisers: 'اعلانگر جدید'

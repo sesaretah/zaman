@@ -7,6 +7,18 @@
       <div class="card-header">
         <h3 class="card-title"></h3>
         <div class="card-options">
+          <%= link_to "/advertisers/subscribe/#{@advertiser.id}", remote: true, class: "btn btn-secondary" do %>
+          <i class="fas fa-plug"></i> <%=t :subscribe%>
+          <%end%>
+
+          <%= link_to "/advertisers/subscribers/#{@advertiser.id}", remote: true, class: "btn btn-secondary" do %>
+          <i class="fas fa-users"></i> <%=t :users%>
+          <%end%>
+
+          <%= link_to "/advertisers/events/#{@advertiser.id}", remote: true, class: "btn btn-secondary" do %>
+          <i class="far fa-calendar-alt"></i> <%=t :advertiser_events%>
+          <%end%>
+
           <a href="/advertisers/<%=@advertiser.uuid%>/edit" class='btn btn-secondary'><i class="fe fe-edit" style="vertical-align:-3px;"></i> <%=t :edit%></a>
         </div>
       </div>

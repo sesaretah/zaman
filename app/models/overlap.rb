@@ -9,17 +9,17 @@ class Overlap < ActiveRecord::Base
     self.uuid = SecureRandom.uuid
   end
 
-  def self.sets(day)
+  def self.sets(day, user_id)
     #caution Do this for a single user not all !
-    @overlaps = Overlap.joins(:event).where(events: {event_date: day}).distinct
+    @overlaps = Overlap.joins(:event).where(events: {event_date: day, user_id: user_id}).distinct
     g = RGL::DirectedAdjacencyGraph[]
     for overlap in @overlaps
       g.add_edge "#{overlap.event_id}","#{overlap.overlaper_id}"
     end
     if @overlaps.blank?
-      @ev = Event.where(event_date: day)
+      @ev = Event.where(event_date: day, user_id: user_id)
     else
-      @ev = Event.where("event_date = ? and id NOT IN (?)", day,Overlap.joins(:event).where(events: {event_date: day}).distinct.pluck(:event_id, :overlaper_id).flatten.uniq)
+      @ev = Event.where("event_date = ? and id NOT IN (?)", day,Overlap.joins(:event).where(events: {event_date: day, user_id: user_id}).distinct.pluck(:event_id, :overlaper_id).flatten.uniq)
     end
     for event in @ev
       g.add_vertex event.id

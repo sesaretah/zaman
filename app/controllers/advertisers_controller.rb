@@ -1,6 +1,17 @@
 class AdvertisersController < ApplicationController
   before_action :set_advertiser, only: [:show, :edit, :update, :destroy]
 
+  def subscribe
+
+  end
+
+  def subscribers
+
+  end
+
+  def events
+
+  end
   # GET /advertisers
   # GET /advertisers.json
   def index
@@ -19,6 +30,7 @@ class AdvertisersController < ApplicationController
 
   # GET /advertisers/1/edit
   def edit
+      @upload_ids = Upload.where(uploadable_type: 'Advertiser', uploadable_id: @advertiser.id).pluck(:id)
   end
 
   # POST /advertisers

@@ -2,3 +2,20 @@
   width: 2px;
   background: blue;
 }
+
+.svg-icon {
+  width:18px;
+  margin-left:5px;
+}
+
+.text-orange {
+  color: #ea9000 !important;
+}
+
+#error_explanation h2, .h2 {
+    font-size: 0.8rem;
+}
+
+.datepicker-plot-area .datepicker-day-view .table-days td.selected span, .datepicker-plot-area .datepicker-year-view .year-item.selected, .datepicker-plot-area .datepicker-month-view .month-item.selected {
+    background-color: #994800 !important;
+}

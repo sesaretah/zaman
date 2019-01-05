@@ -89,7 +89,7 @@
 
 .datepicker-plot-area .datepicker-day-view .table-days td.selected span .datepicker-plot-area .datepicker-day-view .table-days td:hover, .datepicker-plot-area .datepicker-day-view .table-days td span:hover, .datepicker-plot-area .datepicker-year-view .year-item:hover,
 .datepicker-plot-area .datepicker-month-view .month-item:hover {
-  background-color: #007be6;
+  background-color: #e68010;
   color: #fff;
   border: 0;
   text-shadow: none; }

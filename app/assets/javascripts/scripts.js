@@ -1,4 +1,4 @@
-$(document).ready(function() {
+function fireThisUponEvent() {
 	$('.leapyear-algorithmic').persianDatepicker({
 		inline: true,
 		onSelect: function(unix){
@@ -11,7 +11,7 @@ $(document).ready(function() {
 			console.log('datepicker select : ' + unix);
 		}
 	});
-});
+};
 
 function EpochToDate(epoch) {
     if (epoch < 10000000000)
@@ -19,3 +19,5 @@ function EpochToDate(epoch) {
     var epoch = epoch + (new Date().getTimezoneOffset() * -1); //for timeZone
     return new Date(epoch);
 }
+
+$(document).on('turbolinks:load', fireThisUponEvent)

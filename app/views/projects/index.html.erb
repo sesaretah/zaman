@@ -1,0 +1,8 @@
+
+<div class="row row-cards row-deck">
+  <% for project in Project.all%>
+  <div class="col-sm-4 col-xl-3">
+    <%= render partial: 'projects/project_block', locals: {project: project}%>
+  </div>
+  <%end%>
+</div>

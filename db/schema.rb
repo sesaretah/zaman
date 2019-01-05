@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190103145532) do
+ActiveRecord::Schema.define(version: 20190105154730) do
 
   create_table "advertisers", force: :cascade do |t|
     t.string   "uuid",       limit: 255
@@ -52,6 +52,44 @@ ActiveRecord::Schema.define(version: 20190103145532) do
   add_index "overlaps", ["overlaper_id"], name: "index_overlaps_on_overlaper_id", using: :btree
   add_index "overlaps", ["uuid"], name: "index_overlaps_on_uuid", unique: true, using: :btree
 
+  create_table "profiles", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "user_id",    limit: 4
+    t.string   "uuid",       limit: 255
+    t.integer  "integer_id", limit: 4
+  end
+
+  add_index "profiles", ["integer_id"], name: "index_profiles_on_integer_id", using: :btree
+  add_index "profiles", ["uuid"], name: "index_profiles_on_uuid", unique: true, using: :btree
+
+  create_table "projects", force: :cascade do |t|
+    t.string   "title",      limit: 255
+    t.text     "details",    limit: 65535
+    t.integer  "user_id",    limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.string   "uuid",       limit: 255
+    t.integer  "integer_id", limit: 4
+  end
+
+  add_index "projects", ["integer_id"], name: "index_projects_on_integer_id", using: :btree
+  add_index "projects", ["uuid"], name: "index_projects_on_uuid", unique: true, using: :btree
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.string   "advertiser_id", limit: 255
+    t.integer  "user_id",       limit: 4
+    t.string   "uuid",          limit: 255
+    t.string   "status_id",     limit: 255
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "subscriptions", ["advertiser_id"], name: "index_subscriptions_on_advertiser_id", using: :btree
+  add_index "subscriptions", ["status_id"], name: "index_subscriptions_on_status_id", using: :btree
+  add_index "subscriptions", ["uuid"], name: "index_subscriptions_on_uuid", unique: true, using: :btree
+
   create_table "uploads", force: :cascade do |t|
     t.string   "uploadable_id",           limit: 255
     t.string   "uploadable_type",         limit: 255
@@ -66,5 +104,18 @@ ActiveRecord::Schema.define(version: 20190103145532) do
 
   add_index "uploads", ["uploadable_id"], name: "index_uploads_on_uploadable_id", using: :btree
   add_index "uploads", ["uploadable_type"], name: "index_uploads_on_uploadable_type", using: :btree
+
+  create_table "users", force: :cascade do |t|
+    t.string   "email",                  limit: 255, default: "", null: false
+    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "reset_password_token",   limit: 255
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.string   "username",               limit: 255
+    t.string   "mobile",                 limit: 255
+    t.string   "fullname",               limit: 255
+  end
+
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end
