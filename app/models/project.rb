@@ -1,6 +1,8 @@
 class Project < ActiveRecord::Base
   self.primary_key = 'uuid'
+
   belongs_to :user
+  has_many :participations
 
   def cover(style)
     @upload = Upload.where(uploadable_id: self.id, attachment_type: 'project_cover').first

@@ -3,6 +3,7 @@ class Subscription < ActiveRecord::Base
 
   belongs_to :status
   belongs_to :user
+  belongs_to :advertiser
 
   before_create :set_uuid
   def set_uuid

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190107161408) do
+ActiveRecord::Schema.define(version: 20190107162123) do
 
   create_table "advertisers", force: :cascade do |t|
     t.string   "uuid",       limit: 255
@@ -39,6 +39,18 @@ ActiveRecord::Schema.define(version: 20190107161408) do
   end
 
   add_index "events", ["uuid"], name: "index_events_on_uuid", unique: true, using: :btree
+
+  create_table "milestones", force: :cascade do |t|
+    t.string   "project_id", limit: 255
+    t.string   "uuid",       limit: 255
+    t.string   "title",      limit: 255
+    t.text     "details",    limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "milestones", ["project_id"], name: "index_milestones_on_project_id", using: :btree
+  add_index "milestones", ["uuid"], name: "index_milestones_on_uuid", unique: true, using: :btree
 
   create_table "overlaps", force: :cascade do |t|
     t.string   "event_id",     limit: 255
