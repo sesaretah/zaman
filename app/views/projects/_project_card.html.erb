@@ -1,0 +1,47 @@
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title"></h3>
+    <div class="card-options">
+      <%= link_to "/projects/subscribers/#{project.id}", remote: true, class: "btn btn-sm btn-secondary" do %>
+      <i class="fas fa-link"></i> <%=t :participate%>
+      <%end%>
+
+      <%= link_to "/projects/subscribers/#{project.id}", remote: true, class: "btn btn-sm btn-secondary" do %>
+      <i class="fas fa-users"></i> <%=t :users%>
+      <%end%>
+
+      <%= link_to "/projects/events/#{project.id}", remote: true, class: "btn btn-sm btn-secondary" do %>
+      <i class="fas fa-tasks"></i> <%=t :tasks%>
+      <%end%>
+
+      <%= link_to "/projects/milestones/#{project.id}", remote: true, class: "btn btn-sm btn-secondary" do %>
+      <i class="far fa-flag"></i> <%=t :milestones%>
+      <%end%>
+
+
+
+      <%= link_to "/projects/details/#{project.id}", remote: true, class: "btn btn-sm btn-secondary" do %>
+      <i class="fe fe-play"></i> <%=t :details%>
+      <%end%>
+      <a href="/projects/<%=project.uuid%>/edit" class='btn btn-sm btn-secondary'><i class="fe fe-edit" style="vertical-align:-3px;"></i> <%=t :edit%></a>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class='row'>
+      <div class='col-md-12 col-lg-12'>
+        <div class="form-group">
+          <%= label :project, :title , class: "form-label", style: 'color: #7795c1;'%>
+          <div class="form-control-plaintext"><%= project.title %></div>
+        </div>
+        <div class="form-group">
+          <%= label :project, :details , class: "form-label", style: 'color: #7795c1;'%>
+          <div class="form-control-plaintext text-justify"><%= project.details %></div>
+        </div>
+        <div class="form-group">
+          <%= label :project, :user_id , class: "form-label", style: 'color: #7795c1;'%>
+          <div class="form-control-plaintext"><%= project.user_id %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

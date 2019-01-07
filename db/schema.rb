@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190105154730) do
+ActiveRecord::Schema.define(version: 20190107161408) do
 
   create_table "advertisers", force: :cascade do |t|
     t.string   "uuid",       limit: 255
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20190105154730) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.integer  "integer_id", limit: 4
+    t.string   "p_type",     limit: 255
   end
 
   add_index "advertisers", ["uuid"], name: "index_advertisers_on_uuid", unique: true, using: :btree
@@ -52,6 +53,19 @@ ActiveRecord::Schema.define(version: 20190105154730) do
   add_index "overlaps", ["overlaper_id"], name: "index_overlaps_on_overlaper_id", using: :btree
   add_index "overlaps", ["uuid"], name: "index_overlaps_on_uuid", unique: true, using: :btree
 
+  create_table "participations", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4
+    t.string   "project_id", limit: 255
+    t.string   "uuid",       limit: 255
+    t.string   "status_id",  limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "participations", ["project_id"], name: "index_participations_on_project_id", using: :btree
+  add_index "participations", ["status_id"], name: "index_participations_on_status_id", using: :btree
+  add_index "participations", ["uuid"], name: "index_participations_on_uuid", unique: true, using: :btree
+
   create_table "profiles", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
@@ -72,10 +86,39 @@ ActiveRecord::Schema.define(version: 20190105154730) do
     t.datetime "updated_at",               null: false
     t.string   "uuid",       limit: 255
     t.integer  "integer_id", limit: 4
+    t.string   "p_type",     limit: 255
   end
 
   add_index "projects", ["integer_id"], name: "index_projects_on_integer_id", using: :btree
   add_index "projects", ["uuid"], name: "index_projects_on_uuid", unique: true, using: :btree
+
+  create_table "speardings", force: :cascade do |t|
+    t.string   "event_id",        limit: 255
+    t.string   "speardable_id",   limit: 255
+    t.string   "speardable_type", limit: 255
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "speardings", ["event_id"], name: "index_speardings_on_event_id", using: :btree
+  add_index "speardings", ["speardable_id"], name: "index_speardings_on_speardable_id", using: :btree
+  add_index "speardings", ["speardable_type"], name: "index_speardings_on_speardable_type", using: :btree
+
+  create_table "statuses", force: :cascade do |t|
+    t.string   "scope_type",  limit: 255
+    t.string   "title",       limit: 255
+    t.string   "uuid",        limit: 255
+    t.string   "next_id",     limit: 255
+    t.string   "previous_id", limit: 255
+    t.boolean  "start_point"
+    t.boolean  "end_point"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "statuses", ["next_id"], name: "index_statuses_on_next_id", using: :btree
+  add_index "statuses", ["previous_id"], name: "index_statuses_on_previous_id", using: :btree
+  add_index "statuses", ["uuid"], name: "index_statuses_on_uuid", unique: true, using: :btree
 
   create_table "subscriptions", force: :cascade do |t|
     t.string   "advertiser_id", limit: 255

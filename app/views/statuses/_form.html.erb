@@ -1,0 +1,57 @@
+<div id='settings-detail'>
+  <div class="card-header">
+
+  </div>
+  <div class="card-body">
+    <%= form_for status, remote: true do |f|%>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="form-group">
+          <label class="form-label"><%=t :title%></label>
+            <%= f.text_field :title, class: "form-control" %>
+
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label class="form-label"><%=t :scope_type%></label>
+          <%= f.select(:scope_type, options_for_select(scope_types), {} ,{class: "form-control"})%>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label class="form-label"><%=t :next_id%></label>
+          <%= f.select(:next_id, options_for_select(Status.all.collect { |p| [ p.title, p.id ] }, status.next_id), {:include_blank => true} ,{class: "form-control"}) %>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label class="form-label"><%=t :previous_id%></label>
+          <%= f.select(:previous_id, options_for_select(Status.all.collect { |p| [ p.title, p.id ] }, status.previous_id), {:include_blank => true}, {class: "form-control"}) %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-9">
+        <div class="form-group">
+          <div>
+            <label class="custom-control custom-checkbox custom-control-inline">
+              <input type="checkbox" class="custom-control-input" name="status[start_point]" value="1" <%if status.start_point%>checked<%end%>>
+              <span class="custom-control-label"><%=t :start_point%></span>
+            </label>
+            <label class="custom-control custom-checkbox custom-control-inline">
+              <input type="checkbox" class="custom-control-input" name="status[end_point]" value="1"  <%if status.end_point%>checked<%end%>>
+              <span class="custom-control-label"><%=t :end_point%></span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 text-right">
+        <button id='submit-btn' type="submit" class="btn btn-primary"><%=t :submit%></button>
+      </div>
+    </div>
+    <%end%>
+
+    <%= render partial: 'statuses/list'%>
+  </div>
+</div>

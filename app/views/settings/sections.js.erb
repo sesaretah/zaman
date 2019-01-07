@@ -1,0 +1,5 @@
+$(".list-group-item-action.active").removeClass('active');
+<% if @section == 'statuses'%>
+$("#settings-detail").replaceWith("<%= escape_javascript(render(:partial => 'statuses/form', locals: {status: Status.new})) %>");
+$("#statuses-nav").addClass('active');
+<%end%>

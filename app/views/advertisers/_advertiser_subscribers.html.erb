@@ -1,0 +1,38 @@
+<div id='advertiser-box'>
+<div class="table-responsive">
+  <table class="table table-hover table-outline table-vcenter text-nowrap">
+    <thead>
+      <tr>
+        <td>#</td>
+        <td><%=t :name%></td>
+        <td><%=t :status%></td>
+        <td><%=t :subscribed_at%></td>
+        <td><%=t :event_accepted%></td>
+        <td></td>
+      </tr>
+    </thead>
+    <tbody>
+        <% @i =1%>
+        <% for subscription in subscriptions%>
+      <tr>
+        <td><%= @i%><% @i += 1%></td>
+        <td><%= subscription.user.profile.name%></td>
+        <td><%= subscription.status.title%></td>
+        <td>
+          <span>
+            <% @jalali = JalaliDate.to_jalali(subscription.created_at)%>
+            <%= @jalali.year%>/<%= @jalali.month%>/<%= @jalali.day%>
+          </span>
+        </td>
+        <td>0</td>
+        <td>
+          <%= link_to "/statuses/#{subscription.id}/destroy", remote: true, class: "icon" ,data: { confirm: t(:are_you_sure) } do %>
+          <i class="fas fa-unlink"></i>
+          <%end%>
+        </td>
+      </tr>
+      <%end%>
+    </tbody>
+  </table>
+</div>
+<div>

@@ -1,6 +1,12 @@
 class Advertiser < ActiveRecord::Base
   self.primary_key = 'uuid'
+
   belongs_to :user
+
+  has_many :speardings, :as => :speardable, :dependent => :destroy
+  has_many :events, :through => :speardings
+
+  has_many :uploads, :as => :uploadable, :dependent => :destroy
 
   def cover(style)
     @upload = Upload.where(uploadable_id: self.id, attachment_type: 'advertiser_cover').first
@@ -11,6 +17,23 @@ class Advertiser < ActiveRecord::Base
     end
   end
 
+  def subscribed(user)
+    @subscription = Subscription.where(advertiser_id: self.id, user_id: user.id).first
+    if @subscription.blank?
+      return false
+    else
+      return true
+    end
+  end
+
+  def subscription_endpoint(user)
+    @subscription = Subscription.where(advertiser_id: self.id, user_id: user.id).first
+    if !@subscription.blank? && @subscription.status.end_point
+      return true
+    else
+      return false
+    end
+  end
 
   before_create :set_uuid
   def set_uuid

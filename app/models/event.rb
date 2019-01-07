@@ -2,6 +2,9 @@ class Event < ActiveRecord::Base
   self.primary_key = 'uuid'
   has_many :overlaps, dependent: :destroy
 
+  has_many :speardings, :as => :speardable, :dependent => :destroy
+  has_many :advertisers, :through => :speardings
+
   before_create :set_uuid
   def set_uuid
     self.uuid = SecureRandom.uuid

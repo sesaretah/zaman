@@ -1,0 +1,41 @@
+<table class="table table-hover table-outline table-vcenter text-nowrap">
+  <thead>
+    <tr>
+      <td><%=t :title%></td>
+      <td><%=t :scope_type%></td>
+      <td><%=t :next_id%></td>
+      <td><%=t :previous_id%></td>
+      <td><%=t :start%></td>
+      <td><%=t :end%></td>
+      <td></td>
+    </tr>
+  </thead>
+  <tbody>
+    <%for status in Status.all%>
+    <tr>
+      <td><%= status.title%></td>
+      <td><%=t status.scope_type%></td>
+      <td><%= Status.find_by_uuid(status.next_id).title rescue nil %></td>
+      <td><%= Status.find_by_uuid(status.previous_id).title rescue nil%></td>
+      <td>
+        <% if status.start_point%>
+        <i class="fe fe-check"></i>
+        <%end%>
+      </td>
+      <td>
+        <% if status.end_point%>
+        <i class="fe fe-check"></i>
+        <%end%>
+      </td>
+      <td>
+        <%= link_to "/statuses/#{status.id}/edit", remote: true, class: "icon" do %>
+        <i class="fe fe-edit" style='vertical-align:-3px;'></i>
+        <%end%>
+        <%= link_to "/statuses/#{status.id}/destroy", remote: true, class: "icon" ,data: { confirm: t(:are_you_sure) } do %>
+        <i class="fe fe-trash" style='vertical-align:-3px;'></i>
+        <%end%>
+      </td>
+    </tr>
+    <%end%>
+  </tbody>
+</table>

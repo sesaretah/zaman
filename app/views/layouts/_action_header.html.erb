@@ -6,6 +6,15 @@
         <li class="nav-item" ><%=link_to raw("<i class='fe fe-plus-square' style='vertical-align:-3px;'></i>") + t("new_#{params[:controller]}"), "#{params[:controller]}/new", style: "color: #fff;"%></li>
       </ul>
       <%end%>
+      <% if params[:controller] == 'settings'%>
+      <ul class="nav nav-tabs border-0 flex-column flex-lg-row text-white">
+        <li class="nav-item" >
+          <%= link_to '/settings/sections?section=statuses', id: 'statuses-nav', remote: true, style: "color: #fff;"  do%>
+          <i class="fe fe-sliders" style="vertical-align:-3px;"></i> <%=t :statuses%>
+        </li>
+      </ul>
+      <%end%>
+      <%end%>
     </div>
   </div>
 </div>

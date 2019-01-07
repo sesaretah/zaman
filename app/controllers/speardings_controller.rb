@@ -1,0 +1,2 @@
+class SpeardingsController < ApplicationController
+end

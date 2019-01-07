@@ -7,8 +7,8 @@ class User < ActiveRecord::Base
 
   has_one :agency
   has_one :profile
-  has_many :tours, :through => :reservations
-  has_many :reservations, dependent: :destroy
+  has_many :advertisers, :through => :subscriptions
+  has_many :subscriptions, dependent: :destroy
 
   def email_required?
     false

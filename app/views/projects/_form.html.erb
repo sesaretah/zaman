@@ -33,6 +33,14 @@
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-5">
+      <div class="form-group">
+        <%= f.label :p_type, class: "form-label" %>
+        <%= f.select(:p_type, options_for_select(p_types, @project.p_type), {}, {class: "form-control"}) %>
+      </div>
+    </div>
+  </div>
   <%end%>
   <% if @upload_ids.blank?%>
   <%= hidden_field_tag :attachments, ''%>

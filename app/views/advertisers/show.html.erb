@@ -1,45 +1,8 @@
 <div class='row'>
-  <div class="col-lg-4 order-lg-1">
+  <div class="col-lg-3 order-lg-1">
     <%= render partial: 'advertisers/advertiser_block', locals: {advertiser: @advertiser}%>
   </div>
-  <div class="col-lg-8 order-lg-1">
-    <div class="card">
-      <div class="card-header">
-        <h3 class="card-title"></h3>
-        <div class="card-options">
-          <%= link_to "/advertisers/subscribe/#{@advertiser.id}", remote: true, class: "btn btn-secondary" do %>
-          <i class="fas fa-plug"></i> <%=t :subscribe%>
-          <%end%>
-
-          <%= link_to "/advertisers/subscribers/#{@advertiser.id}", remote: true, class: "btn btn-secondary" do %>
-          <i class="fas fa-users"></i> <%=t :users%>
-          <%end%>
-
-          <%= link_to "/advertisers/events/#{@advertiser.id}", remote: true, class: "btn btn-secondary" do %>
-          <i class="far fa-calendar-alt"></i> <%=t :advertiser_events%>
-          <%end%>
-
-          <a href="/advertisers/<%=@advertiser.uuid%>/edit" class='btn btn-secondary'><i class="fe fe-edit" style="vertical-align:-3px;"></i> <%=t :edit%></a>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class='row'>
-          <div class='col-md-12 col-lg-12'>
-            <div class="form-group">
-              <%= label :advertiser, :title , class: "form-label", style: 'color: #7795c1;'%>
-              <div class="form-control-plaintext"><%= @advertiser.title %></div>
-            </div>
-            <div class="form-group">
-              <%= label :advertiser, :details , class: "form-label", style: 'color: #7795c1;'%>
-              <div class="form-control-plaintext text-justify"><%= @advertiser.details %></div>
-            </div>
-            <div class="form-group">
-              <%= label :advertiser, :user_id , class: "form-label", style: 'color: #7795c1;'%>
-              <div class="form-control-plaintext"><%= @advertiser.user_id %></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="col-lg-9 order-lg-1">
+    <%= render partial: 'advertisers/advertiser_card', locals: {advertiser: @advertiser}%>
   </div>
 </div>

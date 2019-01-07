@@ -1,0 +1,41 @@
+<div id='advertiser-card' class="card">
+  <div class="card-header">
+    <h3 class="card-title"></h3>
+    <div class="card-options">
+      <% if !advertiser.subscribed(current_user)%>
+      <%= link_to "/advertisers/subscribe/#{advertiser.id}", remote: true, class: "btn btn-sm btn-secondary", data: { confirm: t(:are_you_sure) }  do %>
+      <i class="fas fa-link"></i> <%=t :subscribe%>
+      <%end%>
+      <%else%>
+      <% if advertiser.subscription_endpoint(current_user)%>
+      <%= link_to "/advertisers/unsubscribe/#{advertiser.id}", remote: true, class: "btn btn-sm btn-secondary", data: { confirm: t(:are_you_sure) }  do %>
+      <i class="fas fa-unlink"></i> <%=t :unsubscribe%>
+      <%end%>
+      <%else%>
+      <span class="btn btn-sm btn-secondary"><%=t :inspecting%></span>
+      <%end%>
+      <%end%>
+
+      <%= link_to "/advertisers/subscribers/#{advertiser.id}", remote: true, class: "btn btn-sm btn-secondary" do %>
+      <i class="fas fa-users"></i> <%=t :users%>
+      <%end%>
+
+      <%= link_to "/advertisers/events/#{advertiser.id}", remote: true, class: "btn btn-sm btn-secondary" do %>
+      <i class="far fa-calendar-alt"></i> <%=t :advertiser_events%>
+      <%end%>
+
+      <%= link_to "/advertisers/details/#{advertiser.id}", remote: true, class: "btn btn-sm btn-secondary" do %>
+      <i class="fe fe-play"></i> <%=t :details%>
+      <%end%>
+
+      <a href="/advertisers/<%=advertiser.uuid%>/edit" class='btn btn-sm btn-secondary'><i class="fe fe-edit" style="vertical-align:-3px;"></i> <%=t :edit%></a>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class='row'>
+      <div class='col-md-12 col-lg-12'>
+        <%= render partial:'advertisers/advertiser_details', locals: {advertiser: advertiser}%>
+      </div>
+    </div>
+  </div>
+</div>

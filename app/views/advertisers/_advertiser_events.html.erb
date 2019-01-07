@@ -1,0 +1,99 @@
+<div id='advertiser-box'>
+  <%= form_tag '/events', remote: true, id: 'event-form' do |f| %>
+
+  <%= hidden_field_tag :speardable_id, params[:id]%>
+  <%= hidden_field_tag :speardable_type, 'Advertiser'%>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <label class="form-label"><%=t :event_date%></label>
+        <%= hidden_field_tag :unix_time, nil%>
+        <input class="form-control event_date" />
+        <script>
+        $('.event_date').persianDatepicker({
+          altField: '#unix_time',
+          format: 'YYYY/MM/DD',
+        });
+        </script>
+      </div>
+    </div>
+  <div class="col-md-9">
+      <div class="form-group">
+        <label class="form-label"><%=t :details%></label>
+        <%= text_field_tag :content, nil, class: "form-control", required: true%>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">
+      <div class="form-group">
+        <label class="form-label"><%=t :starts_at %></label>
+        <div class="row gutters-xs">
+          <div class="col-5">
+            <%= select_tag :starts_at_minutes, options_for_select((0..59).step(15).to_a.map{|s| ["#{s}", s]}), {class: "form-control"}%>
+          </div>
+          <div class="col-5">
+            <%= select_tag :starts_at_hour, options_for_select((0..23).step(1).to_a.map{|s| ["#{s}", s]}), {class: "form-control"}%>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-5">
+      <div class="form-group">
+        <label class="form-label"><%=t :ends_at %></label>
+        <div class="row gutters-xs">
+          <div class="col-5">
+            <%= select_tag :ends_at_minutes, options_for_select((0..59).step(15).to_a.map{|s| ["#{s}", s]}), {class: "form-control ends_at"}%>
+          </div>
+          <div class="col-5">
+            <%= select_tag :ends_at_hour, options_for_select((0..23).step(1).to_a.map{|s| ["#{s}", s]}), {class: "form-control ends_at"}%>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <label class="form-label">&nbsp</label>
+      <button type="submit" id="modal-btn" class="btn btn-success"><%=t :submit %></button>
+    </div>
+  </div>
+  <% end %>
+
+  <div class="table-responsive">
+    <table class="table table-hover table-outline table-vcenter text-nowrap">
+      <thead>
+        <tr>
+          <td>#</td>
+          <td><%=t :details%></td>
+          <td><%=t :event_date%></td>
+          <td><%=t :starts_at%></td>
+          <td><%=t :ends_at%></td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+          <% @i =1%>
+          <% for event in advertiser.events.order('event_date desc')%>
+        <tr>
+          <td><%= @i%><% @i += 1%></td>
+          <td><%= event.content%></td>
+          <td>
+            <span>
+              <% @jalali = JalaliDate.to_jalali(event.event_date)%>
+              <%= @jalali.year%>/<%= @jalali.month%>/<%= @jalali.day%>
+            </span>
+          </td>
+          <td><%= event.starts_at.strftime("%H:%M")%></td>
+          <td><%= event.ends_at.strftime("%H:%M")%></td>
+          <td>
+            <%= link_to "/events/#{event.id}/destroy", remote: true, class: "icon" ,data: { confirm: t(:are_you_sure) } do %>
+            <i class="fe fe-trash"></i>
+            <%end%>
+          </td>
+        </tr>
+        <%end%>
+      </tbody>
+    </table>
+  </div>
+</div>

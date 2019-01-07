@@ -1,17 +1,33 @@
 class AdvertisersController < ApplicationController
-  before_action :set_advertiser, only: [:show, :edit, :update, :destroy]
+  before_action :set_advertiser, only: [:show, :edit, :update, :destroy, :subscribe, :unsubscribe, :subscribers, :details, :events]
 
+  def details
+  end
+  
   def subscribe
-
+    if @advertiser.p_type == 'Public'
+      @status = Status.where(scope_type: 'Subscription', end_point: true).first
+    else
+      @status = Status.where(scope_type: 'Subscription', start_point: true).first
+    end
+    @subscription = Subscription.create(user_id: current_user.id, advertiser_id: @advertiser.id, status_id: @status.id)
   end
 
-  def subscribers
+  def unsubscribe
+    @status = Status.where(scope_type: 'Subscription', start_point: true).first
+    @subscription = Subscription.where(user_id: current_user.id, advertiser_id: @advertiser.id).first
+    @subscription.destroy
+  end
 
+
+
+  def subscribers
+    @subscriptions = Subscription.where(advertiser_id: @advertiser.id)
   end
 
   def events
-
   end
+
   # GET /advertisers
   # GET /advertisers.json
   def index
@@ -30,7 +46,7 @@ class AdvertisersController < ApplicationController
 
   # GET /advertisers/1/edit
   def edit
-      @upload_ids = Upload.where(uploadable_type: 'Advertiser', uploadable_id: @advertiser.id).pluck(:id)
+    @upload_ids = Upload.where(uploadable_type: 'Advertiser', uploadable_id: @advertiser.id).pluck(:id)
   end
 
   # POST /advertisers
@@ -76,13 +92,13 @@ class AdvertisersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_advertiser
-      @advertiser = Advertiser.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_advertiser
+    @advertiser = Advertiser.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def advertiser_params
-      params.require(:advertiser).permit(:uuid, :title, :details, :user_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def advertiser_params
+    params.require(:advertiser).permit(:uuid, :title, :details, :p_type)
+  end
 end
