@@ -13,9 +13,26 @@
 }
 
 #error_explanation h2, .h2 {
-    font-size: 0.8rem;
+  font-size: 0.8rem;
 }
 
 .datepicker-plot-area .datepicker-day-view .table-days td.selected span, .datepicker-plot-area .datepicker-year-view .year-item.selected, .datepicker-plot-area .datepicker-month-view .month-item.selected {
-    background-color: #994800 !important;
+  background-color: #994800 !important;
+}
+
+
+.card-inner {
+  min-height: 40px;
+  padding: 10px;
+  background-color: #f5eee2;
+}
+
+.btn-brown {
+  color: #fff;
+  background-color: #af7b45;
+  border-color: #986a2f;
+}
+
+.btn-brown a:hover{
+  color: #fff;
 }

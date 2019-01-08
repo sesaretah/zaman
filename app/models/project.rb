@@ -3,6 +3,7 @@ class Project < ActiveRecord::Base
 
   belongs_to :user
   has_many :participations
+  has_many :milestones
 
   def cover(style)
     @upload = Upload.where(uploadable_id: self.id, attachment_type: 'project_cover').first

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190107162123) do
+ActiveRecord::Schema.define(version: 20190108103819) do
 
   create_table "advertisers", force: :cascade do |t|
     t.string   "uuid",       limit: 255
@@ -25,6 +25,17 @@ ActiveRecord::Schema.define(version: 20190107162123) do
   end
 
   add_index "advertisers", ["uuid"], name: "index_advertisers_on_uuid", unique: true, using: :btree
+
+  create_table "assignments", force: :cascade do |t|
+    t.string   "task_id",    limit: 255
+    t.integer  "user_id",    limit: 4
+    t.string   "uuid",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "assignments", ["task_id"], name: "index_assignments_on_task_id", using: :btree
+  add_index "assignments", ["uuid"], name: "index_assignments_on_uuid", using: :btree
 
   create_table "events", force: :cascade do |t|
     t.date     "event_date"
@@ -145,6 +156,19 @@ ActiveRecord::Schema.define(version: 20190107162123) do
   add_index "subscriptions", ["status_id"], name: "index_subscriptions_on_status_id", using: :btree
   add_index "subscriptions", ["uuid"], name: "index_subscriptions_on_uuid", unique: true, using: :btree
 
+  create_table "tasks", force: :cascade do |t|
+    t.string   "milestone_id", limit: 255
+    t.string   "uuid",         limit: 255
+    t.string   "title",        limit: 255
+    t.date     "deadline"
+    t.integer  "user_id",      limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "tasks", ["milestone_id"], name: "index_tasks_on_milestone_id", using: :btree
+  add_index "tasks", ["uuid"], name: "index_tasks_on_uuid", unique: true, using: :btree
+
   create_table "uploads", force: :cascade do |t|
     t.string   "uploadable_id",           limit: 255
     t.string   "uploadable_type",         limit: 255
@@ -171,6 +195,7 @@ ActiveRecord::Schema.define(version: 20190107162123) do
     t.string   "fullname",               limit: 255
   end
 
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

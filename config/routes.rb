@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :projects
   resources :statuses
+  resources :milestones
   resources :profiles
     devise_for :users, :controllers => {:registrations => "registrations", sessions: "sessions"}
   resources :uploads
@@ -23,4 +24,7 @@ Rails.application.routes.draw do
   get '/advertisers/subscribers/:id', to: 'advertisers#subscribers'
   get '/advertisers/details/:id', to: 'advertisers#details'
   get '/advertisers/events/:id', to: 'advertisers#events'
+
+  get '/projects/milestones/:id', to: 'projects#milestones'
+
 end
