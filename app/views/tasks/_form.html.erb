@@ -1,0 +1,36 @@
+<div id='project-task'>
+  <%= form_for task, remote: true, id: 'event-form' do |f| %>
+
+  <div class="row">
+    <div class="col-md-5">
+      <div class="form-group">
+        <label class="form-label"><%=t :title %></label>
+        <%= f.text_field :title, class: "form-control", required: true %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">
+      <div class="form-group">
+        <label class="form-label"><%=t :milestone %></label>
+        <%= f.select(:milestone_id, options_for_select(Milestone.all.collect { |p| [ p.title, p.id ] }), {:include_blank => true} ,{class: "form-control"}) %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-9">
+      <div class="form-group">
+        <label class="form-label"><%=t :details %></label>
+        <%= f.text_area :details, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <label class="form-label">&nbsp</label>
+      <button type="submit" id="modal-btn" class="btn btn-success"><%=t :submit %></button>
+    </div>
+  </div>
+  <% end %>
+</div>

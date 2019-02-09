@@ -2,6 +2,7 @@ class Milestone < ActiveRecord::Base
   self.primary_key = 'uuid'
 
   belongs_to :project
+  has_many :tasks
 
   before_create :set_uuid
   def set_uuid

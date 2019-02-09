@@ -253,6 +253,10 @@ fa:
     page_gap: "&hellip;"
     previous_label: "قبلی"
     next_label: "بعدی"
+  milestone: 'مرحله '
+  tasks_list: 'لیست وظایف'
+  new_task: 'وظیفه جدید '
+  created_at: ' تاریخ ثبت'
   milestones_list: 'لیست مراحل '
   new_milestone: 'مرحله جدید'
   participate: 'مشارکت'

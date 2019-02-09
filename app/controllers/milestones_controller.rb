@@ -1,12 +1,19 @@
 class MilestonesController < ApplicationController
   before_action :set_milestone, only: [:edit, :update, :destroy]
-  before_action :extract_project, only: [:update, :create]
+  before_action :extract_project, only: [:update, :create, :new, :list]
+
+  def new
+  end
+
+  def list
+  end
 
   def edit
   end
 
   def create
     @milestone = Milestone.create(milestone_params)
+    @project = @milestone.project
   end
 
   def update
@@ -14,6 +21,7 @@ class MilestonesController < ApplicationController
   end
 
   def destroy
+    @project = @milestone.project
     @milestone.destroy
   end
 

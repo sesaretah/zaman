@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :projects
   resources :statuses
   resources :milestones
+  resources :tasks
   resources :profiles
     devise_for :users, :controllers => {:registrations => "registrations", sessions: "sessions"}
   resources :uploads
@@ -26,5 +27,10 @@ Rails.application.routes.draw do
   get '/advertisers/events/:id', to: 'advertisers#events'
 
   get '/projects/milestones/:id', to: 'projects#milestones'
+  get '/milestones/list/:project_id', to: 'milestones#list'
+  get '/milestones/:id/destroy', to: 'milestones#destroy'
 
+  get '/projects/tasks/:id', to: 'projects#tasks'
+  get '/tasks/list/:milestone_id', to: 'tasks#list'
+  get '/tasks/:id/destroy', to: 'tasks#destroy'
 end

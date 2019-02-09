@@ -1,0 +1,41 @@
+<div id='project-milestone'>
+  <div class="table-responsive">
+    <table class="table table-hover table-outline table-vcenter text-nowrap">
+      <thead>
+        <tr>
+          <td>#</td>
+          <td><%=t :title %></td>
+          <td></td>
+          <td><%=t :created_at %></td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <% @i =1%>
+        <% for milestone in project.milestones.order('created_at desc')%>
+        <tr>
+          <td><%= @i%><% @i += 1%></td>
+          <td><%= milestone.title%></td>
+          <td>
+            <span class="tag tag-dark">
+              <span class="tag-addon tag-warning">20.9 kB</span>
+              <%= milestone.tasks.count%>
+            </span>
+            </td>
+              <td>
+                <span>
+                  <% @jalali = JalaliDate.to_jalali(milestone.created_at)%>
+                  <%= @jalali.year%>/<%= @jalali.month%>/<%= @jalali.day%>
+                </span>
+              </td>
+              <td>
+                <%= link_to "/milestones/#{milestone.id}/destroy", remote: true, class: "icon" ,data: { confirm: t(:are_you_sure) } do %>
+                <i class="fe fe-trash"></i>
+                <%end%>
+              </td>
+            </tr>
+            <%end%>
+          </tbody>
+        </table>
+      </div>
+    </div>

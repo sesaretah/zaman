@@ -1,6 +1,10 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy, :milestones]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :milestones, :tasks]
 
+  def tasks
+
+  end
+  
   def milestones
 
   end
