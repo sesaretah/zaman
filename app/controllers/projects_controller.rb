@@ -1,10 +1,29 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy, :milestones, :tasks]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :milestones, :tasks, :participants, :participate, :unparticipate]
+
+  def participate
+    if @project.p_type == 'Public'
+      @status = Status.where(scope_type: 'Participation', end_point: true).first
+    else
+      @status = Status.where(scope_type: 'Participation', start_point: true).first
+    end
+    @participation = Participation.create(user_id: current_user.id, project_id: @project.id, status_id: @status.id)
+  end
+
+  def unparticipate
+    @participation = Participation.where(user_id: current_user.id, project_id: @project.id).first
+    @participation.destroy
+  end
+
+
+  def participants
+    @participations = Participation.where(project_id: @project.id)
+  end
 
   def tasks
 
   end
-  
+
   def milestones
 
   end

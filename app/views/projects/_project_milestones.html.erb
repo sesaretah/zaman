@@ -6,7 +6,7 @@
         <%= link_to "/milestones/new?project_id=#{project.id}", remote: true, class: "btn btn-sm btn-secondary" do %>
         <i class="fe fe-plus"></i> <%=t :new_milestone %>
         <%end%>
-        <%= link_to "/milestones/list/#{project.id}", remote: true, class: "btn btn-sm btn-secondary" do %>
+        <%= link_to "/milestones/list/1?project_id=#{project.id}", remote: true, class: "btn btn-sm btn-secondary" do %>
         <i class="fe fe-list"></i> <%=t :milestones_list %>
         <%end%>
       </div>

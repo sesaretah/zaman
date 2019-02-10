@@ -11,6 +11,7 @@
         <input class="form-control event_date" />
         <script>
         $('.event_date').persianDatepicker({
+          minDate: <%= Date.today.to_time.to_i * 1000%>,
           altField: '#unix_time',
           format: 'YYYY/MM/DD',
         });

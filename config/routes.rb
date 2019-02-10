@@ -27,10 +27,20 @@ Rails.application.routes.draw do
   get '/advertisers/events/:id', to: 'advertisers#events'
 
   get '/projects/milestones/:id', to: 'projects#milestones'
-  get '/milestones/list/:project_id', to: 'milestones#list'
+  get '/milestones/list/:id', to: 'milestones#list'
   get '/milestones/:id/destroy', to: 'milestones#destroy'
 
-  get '/projects/tasks/:id', to: 'projects#tasks'
-  get '/tasks/list/:milestone_id', to: 'tasks#list'
+
+  get '/tasks/list/:id', to: 'tasks#list'
   get '/tasks/:id/destroy', to: 'tasks#destroy'
+
+  get "/subscriptions/change_status/:id", to: 'subscriptions#change_status'
+  get "/participations/change_status/:id", to: 'participations#change_status'
+
+  get '/projects/participate/:id', to: 'projects#participate'
+  get '/projects/unparticipate/:id', to: 'projects#unparticipate'
+  get '/projects/participants/:id', to: 'projects#participants'
+  get '/projects/details/:id', to: 'projects#details'
+  get '/projects/events/:id', to: 'projects#events'
+  get '/projects/tasks/:id', to: 'projects#tasks'
 end

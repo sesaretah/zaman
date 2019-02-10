@@ -4,6 +4,7 @@ class Spearding < ActiveRecord::Base
   belongs_to :event
   belongs_to :speardable, :polymorphic => true
   belongs_to :advertiser, :class_name => "Adveritser", :foreign_key => "speardable_id"
+  belongs_to :task, :class_name => "Task", :foreign_key => "speardable_id"
 
   before_create :set_uuid
 

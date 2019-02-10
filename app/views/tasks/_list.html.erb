@@ -2,12 +2,12 @@
   <div class="table-responsive">
 
     <% for milestone in project.milestones.order('created_at desc')%>
-    <h5><%= milestone.title%></h5>
-    <table class="table table-hover table-outline table-vcenter text-nowrap">
+    <h6><%= milestone.title%></h6>
+    <table class="table table-hover table-outline table-vcenter text-nowrap small">
       <thead>
         <tr>
-          <td>#</td>
-          <td><%=t :title %></td>
+          <td><i class="fas fa-hashtag"></i></td>
+          <td class="w-50"><%=t :title %></td>
           <td></td>
           <td><%=t :created_at %></td>
           <td></td>
@@ -18,7 +18,7 @@
         <% for task in milestone.tasks%>
         <tr>
           <td><%= @i%><% @i += 1%></td>
-          <td class="w-50"><%= task.title%></td>
+          <td ><%= task.title%></td>
           <td></td>
           <td>
             <span>
@@ -29,6 +29,9 @@
           <td>
             <%= link_to "/tasks/#{task.id}/destroy", remote: true, class: "icon" ,data: { confirm: t(:are_you_sure) } do %>
             <i class="fe fe-trash"></i>
+            <%end%>
+            <%= link_to "/tasks/#{task.id}/edit?milestone_id=#{milestone.id}", remote: true, class: "icon" do %>
+            <i class="fe fe-edit"></i>
             <%end%>
           </td>
         </tr>

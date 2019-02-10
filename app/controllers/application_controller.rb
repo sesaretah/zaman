@@ -24,4 +24,12 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+
+  def manage_speardables(event, speardable_type, speardable_id)
+    if !speardable_type.blank? && !speardable_id.blank?
+      @spearding = Spearding.create(speardable_id: speardable_id, speardable_type: speardable_type, event_id: event.id)
+      @item = speardable_type.classify.constantize.find(speardable_id)
+    end
+  end
+
 end

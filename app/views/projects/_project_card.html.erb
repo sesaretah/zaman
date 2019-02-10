@@ -1,13 +1,25 @@
-<div class="card">
+<div id='project-card' class="card">
   <div class="card-header">
     <h3 class="card-title"></h3>
     <div class="card-options">
-      <%= link_to "/projects/subscribers/#{project.id}", remote: true, class: "btn btn-sm btn-secondary" do %>
+      <% if !project.participated(current_user)%>
+      <%= link_to "/projects/participate/#{project.id}", remote: true, class: "btn btn-sm btn-secondary", data: { confirm: t(:are_you_sure) }  do %>
       <i class="fas fa-link"></i> <%=t :participate%>
       <%end%>
+      <%else%>
+      <% if project.participation_endpoint(current_user)%>
+      <%= link_to "/projects/unparticipate/#{project.id}", remote: true, class: "btn btn-sm btn-secondary", data: { confirm: t(:are_you_sure) }  do %>
+      <i class="fas fa-unlink"></i> <%=t :unparticipate%>
+      <%end%>
+      <%else%>
+      <%= link_to "/projects/unparticipate/#{project.id}", remote: true, class: "btn btn-sm btn-secondary", data: { confirm: t(:are_you_sure) }  do %>
+      <i class="fas fa-unlink"></i> <%=t :remove_request%>
+      <%end%>
+      <%end%>
+      <%end%>
 
-      <%= link_to "/projects/subscribers/#{project.id}", remote: true, class: "btn btn-sm btn-secondary" do %>
-      <i class="fas fa-users"></i> <%=t :users%>
+      <%= link_to "/projects/participants/#{project.id}", remote: true, class: "btn btn-sm btn-secondary" do %>
+      <i class="fas fa-users"></i> <%=t :participants%>
       <%end%>
 
       <%= link_to "/projects/tasks/#{project.id}", remote: true, class: "btn btn-sm btn-secondary" do %>
@@ -26,5 +38,5 @@
       <a href="/projects/<%=project.uuid%>/edit" class='btn btn-sm btn-secondary'><i class="fe fe-edit" style="vertical-align:-3px;"></i> <%=t :edit%></a>
     </div>
   </div>
-    <%= render partial: 'projects/project_details', locals: {project: @project}%>
+  <%= render partial: 'projects/project_details', locals: {project: @project}%>
 </div>

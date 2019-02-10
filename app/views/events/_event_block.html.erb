@@ -12,11 +12,11 @@
   when 45
     @mt=8.25
   end%>
-  <div class="card" style='position:absolute;margin-top: <%= @mt %>px; height: <%=(@event_end.ends_at - @events.first.starts_at)/3600 *33%>px; min-height: 32px;'>
+  <div class="card" style='position:absolute;margin-top: <%= @mt %>px; height: <%=(@event_end.ends_at - @events.first.starts_at)/3600 *33%>px; min-height: 40px;'>
     <div class="card-status card-status-left bg-orange">
 
     </div>
-    <div class="card-body p-2" style="overflow: scroll;">
+    <div class="card-body p-1" style="overflow: scroll;">
       <%if @events.length > 1%>
       <div class="text-right">
         <div class="tag tag-danger">
@@ -28,7 +28,7 @@
       <%end%>
       <ul class="list-group card-list-group">
         <% for event in @events%>
-        <li class="list-group-item">
+        <li class="list-group-item p-1 small">
           <div class="media">
             <div class="media-object"></div>
             <div class="media-body">
@@ -38,7 +38,7 @@
                   <i class="fe fe-trash" style='vertical-align:-3px;'></i>
                   <%end%>
                 </small>
-                <h5><%= event.starts_at.strftime("%H:%M")%>-<%= event.ends_at.strftime("%H:%M")%></h5>
+                <b><%= event.starts_at.strftime("%H:%M")%>-<%= event.ends_at.strftime("%H:%M")%></b>
               </div>
               <div class="text-muted small">
                 <%= event.content%>

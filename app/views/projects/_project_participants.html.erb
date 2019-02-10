@@ -1,0 +1,78 @@
+<div id='project-box'>
+  <div class="table-responsive">
+    <table class="table table-hover table-outline table-vcenter text-nowrap small">
+      <thead>
+        <tr >
+          <td><i class="fas fa-hashtag"></i></td>
+          <td><%=t :name%></td>
+          <td><%=t :status%></td>
+          <td><%=t :change%></td>
+          <td><%=t :subscribed_at%></td>
+          <td>
+            <i class="fas fa-check-square" data-toggle="tooltip" title="<%=t :event_accepted%>"></i>
+          </td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <% @i =1%>
+        <% for participation in participations%>
+        <tr>
+          <td><%= @i%><% @i += 1%></td>
+          <td><%= participation.user.profile.name%></td>
+          <td><%= participation.status.title%></td>
+          <td>
+            <% if !participation.status.nexts.blank?%>
+            <div class="dropdown ml-2">
+              <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+                <%=t :change_status%>
+              </button>
+              <div class="dropdown-menu" style="  right: 0px !important;">
+                <% for status in participation.status.nexts%>
+                <%= link_to "/participations/change_status/#{participation.id}?status_id=#{status.id}",  class: "dropdown-item", remote: true do%>
+                <%= truncate(status.title, length: 20)%>
+                <%end%>
+                <%end%>
+              </div>
+            </div>
+            <%end%>
+          </td>
+          <td>
+            <span>
+              <% @jalali = JalaliDate.to_jalali(participation.created_at)%>
+              <%= @jalali.year%>/<%= @jalali.month%>/<%= @jalali.day%>
+            </span>
+          </td>
+          <td>0</td>
+          <td>
+            <%= link_to "/projects/unparticipate/#{participation.project.id}", remote: true, class: "icon", data: { confirm: t(:are_you_sure) }  do %>
+            <i class="fas fa-unlink" data-toggle="tooltip" title="<%=t :destroy%>"></i>
+            <%end%>
+          </td>
+        </tr>
+        <%end%>
+      </tbody>
+    </table>
+  </div>
+  <script>
+  $(".change").change(function() {
+    var  next = $(".change option:selected").val();
+    var  id = $(".change").attr('id');
+    $.ajax({
+      url: '/subscriptions/change_status/'+id,
+      type: 'GET',
+      dataType: 'json',
+      data: {
+        status_id: next
+      },
+      error: function() {
+
+      },
+      success: function(res) {
+        console.log(res);
+      }
+    });
+  });
+  </script>
+
+  <div>

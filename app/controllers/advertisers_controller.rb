@@ -3,7 +3,7 @@ class AdvertisersController < ApplicationController
 
   def details
   end
-  
+
   def subscribe
     if @advertiser.p_type == 'Public'
       @status = Status.where(scope_type: 'Subscription', end_point: true).first
@@ -14,11 +14,10 @@ class AdvertisersController < ApplicationController
   end
 
   def unsubscribe
-    @status = Status.where(scope_type: 'Subscription', start_point: true).first
+    #@status = Status.where(scope_type: 'Subscription', start_point: true).first
     @subscription = Subscription.where(user_id: current_user.id, advertiser_id: @advertiser.id).first
     @subscription.destroy
   end
-
 
 
   def subscribers

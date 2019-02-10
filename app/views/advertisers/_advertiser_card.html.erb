@@ -12,7 +12,9 @@
       <i class="fas fa-unlink"></i> <%=t :unsubscribe%>
       <%end%>
       <%else%>
-      <span class="btn btn-sm btn-secondary"><%=t :inspecting%></span>
+      <%= link_to "/advertisers/unsubscribe/#{advertiser.id}", remote: true, class: "btn btn-sm btn-secondary", data: { confirm: t(:are_you_sure) }  do %>
+      <i class="fas fa-unlink"></i> <%=t :remove_request%>
+      <%end%>
       <%end%>
       <%end%>
 

@@ -14,7 +14,62 @@
     <div class="col-md-5">
       <div class="form-group">
         <label class="form-label"><%=t :milestone %></label>
-        <%= f.select(:milestone_id, options_for_select(Milestone.all.collect { |p| [ p.title, p.id ] }), {:include_blank => true} ,{class: "form-control"}) %>
+        <%= f.select(:milestone_id, options_for_select(Milestone.all.collect { |p| [ p.title, p.id ] }, task.milestone_id), {:include_blank => true} ,{class: "form-control"}) %>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-5">
+      <div class="form-group">
+        <label class="form-label"><%=t :deadline%></label>
+        <%= hidden_field_tag :unix_time, nil%>
+        <input class="form-control deadline" />
+        <script>
+        $('.deadline').persianDatepicker({
+          minDate: <%= Date.today.to_time.to_i * 1000%>,
+          altField: '#unix_time',
+          format: 'YYYY/MM/DD',
+        });
+        </script>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="row">
+    <div class="col-md-5">
+      <div class="form-group">
+        <label class="form-label"><%=t :deadline_time %></label>
+        <div class="row gutters-xs">
+          <div class="col-5">
+            <%= select_tag :starts_at_minutes, options_for_select((0..59).step(15).to_a.map{|s| ["#{s}", s]}), {class: "form-control"}%>
+          </div>
+          <div class="col-5">
+            <%= select_tag :starts_at_hour, options_for_select((0..23).step(1).to_a.map{|s| ["#{s}", s]}), {class: "form-control"}%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label class="form-label"><%=t :related_users %></label>
+        <% for participation in project.participations%>
+        <label class="custom-control custom-checkbox custom-control-inline">
+          <input type="checkbox" class="custom-control-input" name="assignee-<%= participation.user.id%>" value="<%= participation.user.id%>" >
+          <span class="custom-control-label">
+            <span class="tag">
+              <span class="tag-avatar avatar" style="background-image: url(<%= participation.user.profile.image('tiny') %>)"></span>
+              <%= participation.user.profile.name%>
+            </span>
+          </span>
+        </label>
+        <%end%>
       </div>
     </div>
   </div>

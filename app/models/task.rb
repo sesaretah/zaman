@@ -2,6 +2,10 @@ class Task < ActiveRecord::Base
   self.primary_key = 'uuid'
 
   belongs_to :milestone
+  has_many :assignments
+  
+  has_many :speardings, :as => :speardable, :dependent => :destroy
+  has_many :events, :through => :speardings
 
   before_create :set_uuid
   def set_uuid
@@ -13,6 +17,6 @@ class Task < ActiveRecord::Base
   end
 
   def self.find(uuid)
-    Milestone.find_by_uuid(uuid)
+    Task.find_by_uuid(uuid)
   end
 end

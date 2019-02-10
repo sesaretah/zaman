@@ -1,38 +1,57 @@
 <div id='advertiser-box'>
-<div class="table-responsive">
-  <table class="table table-hover table-outline table-vcenter text-nowrap">
-    <thead>
-      <tr>
-        <td>#</td>
-        <td><%=t :name%></td>
-        <td><%=t :status%></td>
-        <td><%=t :subscribed_at%></td>
-        <td><%=t :event_accepted%></td>
-        <td></td>
-      </tr>
-    </thead>
-    <tbody>
+  <div class="table-responsive">
+    <table class="table table-hover table-outline table-vcenter text-nowrap small">
+      <thead>
+        <tr >
+          <td><i class="fas fa-hashtag"></i></td>
+          <td><%=t :name%></td>
+          <td><%=t :status%></td>
+          <td><%=t :change%></td>
+          <td><%=t :subscribed_at%></td>
+          <td>
+            <i class="fas fa-check-square" data-toggle="tooltip" title="<%=t :event_accepted%>"></i>
+          </td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
         <% @i =1%>
         <% for subscription in subscriptions%>
-      <tr>
-        <td><%= @i%><% @i += 1%></td>
-        <td><%= subscription.user.profile.name%></td>
-        <td><%= subscription.status.title%></td>
-        <td>
-          <span>
-            <% @jalali = JalaliDate.to_jalali(subscription.created_at)%>
-            <%= @jalali.year%>/<%= @jalali.month%>/<%= @jalali.day%>
-          </span>
-        </td>
-        <td>0</td>
-        <td>
-          <%= link_to "/statuses/#{subscription.id}/destroy", remote: true, class: "icon" ,data: { confirm: t(:are_you_sure) } do %>
-          <i class="fas fa-unlink"></i>
-          <%end%>
-        </td>
-      </tr>
-      <%end%>
-    </tbody>
-  </table>
-</div>
+        <tr>
+          <td><%= @i%><% @i += 1%></td>
+          <td><%= subscription.user.profile.name%></td>
+          <td><%= subscription.status.title%></td>
+          <td>
+            <% if !subscription.status.nexts.blank?%>
+            <div class="dropdown ml-2">
+              <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+                <%=t :change_status%>
+              </button>
+              <div class="dropdown-menu" style="  right: 0px !important;">
+                <% for status in subscription.status.nexts%>
+                <%= link_to "/subscriptions/change_status/#{subscription.id}?status_id=#{status.id}",  class: "dropdown-item", remote: true do%>
+                <%= truncate(status.title, length: 20)%>
+                <%end%>
+                <%end%>
+              </div>
+            </div>
+            <%end%>
+          </td>
+          <td>
+            <span>
+              <% @jalali = JalaliDate.to_jalali(subscription.created_at)%>
+              <%= @jalali.year%>/<%= @jalali.month%>/<%= @jalali.day%>
+            </span>
+          </td>
+          <td>0</td>
+          <td>
+            <%= link_to "/advertisers/unsubscribe/#{subscription.advertiser.id}", remote: true, class: "icon", data: { confirm: t(:are_you_sure) }  do %>
+            <i class="fas fa-unlink" data-toggle="tooltip" title="<%=t :destroy%>"></i>
+            <%end%>
+          </td>
+        </tr>
+        <%end%>
+      </tbody>
+    </table>
+  </div>
 <div>

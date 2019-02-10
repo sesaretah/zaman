@@ -3,7 +3,7 @@
     <table class="table table-hover table-outline table-vcenter text-nowrap">
       <thead>
         <tr>
-          <td>#</td>
+          <td><i class="fas fa-hashtag"></i></td>
           <td><%=t :title %></td>
           <td></td>
           <td><%=t :created_at %></td>
@@ -17,25 +17,29 @@
           <td><%= @i%><% @i += 1%></td>
           <td><%= milestone.title%></td>
           <td>
-            <span class="tag tag-dark">
-              <span class="tag-addon tag-warning">20.9 kB</span>
+            <div class="tag tag-dark" style='vertical-align: 6px;'>
               <%= milestone.tasks.count%>
+              <span class="tag-addon tag-warning"><i class="fas fa-tasks" style="vertical-align: -1px;"></i></span>
+            </div>
+          </td>
+          <td>
+            <span>
+              <% @jalali = JalaliDate.to_jalali(milestone.created_at)%>
+              <%= @jalali.year%>/<%= @jalali.month%>/<%= @jalali.day%>
             </span>
-            </td>
-              <td>
-                <span>
-                  <% @jalali = JalaliDate.to_jalali(milestone.created_at)%>
-                  <%= @jalali.year%>/<%= @jalali.month%>/<%= @jalali.day%>
-                </span>
-              </td>
-              <td>
-                <%= link_to "/milestones/#{milestone.id}/destroy", remote: true, class: "icon" ,data: { confirm: t(:are_you_sure) } do %>
-                <i class="fe fe-trash"></i>
-                <%end%>
-              </td>
-            </tr>
+          </td>
+          <td>
+
+            <%= link_to "/milestones/#{milestone.id}/destroy", remote: true, class: "icon" ,data: { confirm: t(:are_you_sure) } do %>
+            <i class="fe fe-trash"></i>
             <%end%>
-          </tbody>
-        </table>
-      </div>
-    </div>
+            <%= link_to "/milestones/#{milestone.id}/edit?project_id=#{project.id}", remote: true, class: "icon" do %>
+            <i class="fe fe-edit"></i>
+            <%end%>
+          </td>
+        </tr>
+        <%end%>
+      </tbody>
+    </table>
+  </div>
+</div>

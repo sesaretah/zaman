@@ -14,6 +14,24 @@ class Project < ActiveRecord::Base
     end
   end
 
+  def participated(user)
+    @participation = Participation.where(project_id: self.id, user_id: user.id).first
+    if @participation.blank?
+      return false
+    else
+      return true
+    end
+  end
+
+  def participation_endpoint(user)
+    @participation = Participation.where(project_id: self.id, user_id: user.id).first
+    if !@participation.blank? && @participation.status.end_point
+      return true
+    else
+      return false
+    end
+  end
+
 
   before_create :set_uuid
   def set_uuid

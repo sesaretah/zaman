@@ -15,6 +15,13 @@ class Status < ActiveRecord::Base
     end
   end
 
+  def nexts
+    @nexts = Status.where(previous_id: self.id, scope_type: self.scope_type)
+    if !@nexts.blank?
+      return @nexts
+    end
+  end
+
   def set_uuid
     self.uuid = SecureRandom.uuid
   end

@@ -1,6 +1,6 @@
 class StatusesController < ApplicationController
   before_action :set_status, only: [:edit, :update, :destroy]
-  before_action :clean_checkboxes, only: [:update, :create]
+  before_action :clean_checkboxes, only: [:update]
 
   def edit
   end

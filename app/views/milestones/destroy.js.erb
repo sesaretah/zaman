@@ -1,1 +1,8 @@
 $("#project-milestone").replaceWith("<%= escape_javascript(render(:partial => 'milestones/list', locals: { project: @project})) %>");
+new Noty({
+    type: 'error',
+    theme    : 'relax',
+    timeout: 2000,
+    layout: 'bottomLeft',
+    text: '<%=t :successfully_destroyed%>'
+}).show();
