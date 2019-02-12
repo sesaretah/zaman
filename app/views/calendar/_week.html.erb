@@ -1,11 +1,7 @@
 <div id="date-view">
   <div class="card">
     <div class="card-header" style="min-height: 1rem;">
-      <div class="card-options">
-        <%= link_to "/calendar/week/#{time.to_i * 1000}", remote: true do %>
-        week
-        <%end%>
-      </div>
+
       <h3 class="card-title">
         <span>
           <% @jalali = JalaliDate.to_jalali(time)%>
@@ -14,19 +10,32 @@
         (<%= time.strftime("%F")%>)</h3>
       </div>
       <div class="table-responsive">
-        <table class="table card-table table-striped table-vcenter">
+        <table class="table card-table table-striped table-vcenter" style="width:100%; table-layout: fixed;">
+          <thead>
+            <tr>
+              <td class="cell td-border"></td>
+              <td class="cell td-border small"><%=t :saturday%></td>
+              <td class="cell td-border small"><%=t :sunday%></td>
+              <td class="cell td-border small"><%=t :monday%></td>
+              <td class="cell td-border small"><%=t :tuesday%></td>
+              <td class="cell td-border small"><%=t :wednesday%></td>
+              <td class="cell td-border small"><%=t :thursday%></td>
+              <td class="cell td-border small"><%=t :friday%></td>
+            </tr>
+          </thead>
           <tbody>
             <%@i = 0%>
-            <% (time.beginning_of_day.to_datetime.to_i .. time.end_of_day.to_datetime.to_i).step(1.hour) do |date|%>
+            <% (time.beginning_of_day.to_datetime.to_i .. time.end_of_day.to_datetime.to_i).step(2.hour) do |date|%>
             <tr>
-              <td class="w-1 p-1">
-                <div class="tag">
+              <td class="pr-1 pl-1">
+                <div class="tag mr-1">
 
                   <span style="min-width: 25px;"><%= Time.at(date).strftime("%H:%M") %></span>
                   <span class="tag-addon tag-warning"><i class="far fa-clock"></i></span>
                 </div>
               </td>
-              <td id=<%= date%> class="cell">
+              <% for i in 1..7%>
+              <td id=<%= date%> class="cell td-border">
                 <div class="row">
                   <% for set in @sets%>
                   <% if set[:lead].starts_at.strftime("%H") ==  Time.at(date).strftime("%H")%>
@@ -35,6 +44,7 @@
                   <%end%>
                 </div>
               </td>
+              <%end%>
             </tr>
             <%end%>
           </tbody>

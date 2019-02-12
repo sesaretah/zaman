@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   resources :advertisers
   root 'home#index'
   get '/calendar/day/:unix_time', to: "calendar#day"
+  get '/calendar/week/:unix_time', to: "calendar#week"
+  
   post '/events', to: "events#create"
 
   get '/events/:id/delete', to: "events#destroy"

@@ -255,6 +255,13 @@ fa:
     page_gap: "&hellip;"
     previous_label: "قبلی"
     next_label: "بعدی"
+  saturday: 'شنبه '
+  sunday: 'یکشنبه'
+  monday: 'دوشنبه'
+  tuesday: 'سه شنبه'
+  wednesday: 'چهارشنبه'
+  thursday: 'پنجشنبه'
+  friday: 'جمعه'
   related_users: 'کاربران مرتبط '
   deadline_time: 'ساعت'
   deadline: 'مهلت نهایی'
