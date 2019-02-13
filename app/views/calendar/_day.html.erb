@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-header" style="min-height: 1rem;">
       <div class="card-options">
-        <%= link_to "/calendar/week/#{time.to_i * 1000}", remote: true do %>
+        <% link_to "/calendar/week/#{time.to_i * 1000}", remote: true do %>
         week
         <%end%>
       </div>
