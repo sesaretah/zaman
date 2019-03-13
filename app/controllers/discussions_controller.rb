@@ -4,6 +4,7 @@ class DiscussionsController < ApplicationController
 
   def create
     @discussion = Discussion.create(content: params[:content], user_id: current_user.id, task_id: params[:task_id])
+    @task = @discussion.task
   end
 
   def destroy
