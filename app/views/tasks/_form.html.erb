@@ -57,7 +57,7 @@
               <% default_hour = @task ? @task.deadline_time.strftime('%H') :   Time.now.strftime('%H')%>
               <%= select_tag :starts_at_hour, options_for_select((0..23).step(1).to_a.map{|s| ["#{s}", s]}, default_hour), {class: "form-control"}%>
             <%else%>
-              <%= select_tag :starts_at_hour, options_for_select((0..23).step(1).to_a.map{|s| ["#{s}", s]}), {class: "form-control"}%>            <%end%>
+              <%= select_tag :starts_at_hour, options_for_select((0..23).step(1).to_a.map{|s| ["#{s}", s]}), {class: "form-control"}%>            
             <%end%>
           </div>
         </div>
