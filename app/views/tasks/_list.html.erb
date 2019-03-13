@@ -21,10 +21,12 @@
           <td ><%= task.title%></td>
           <td></td>
           <td>
+            <% if !task.deadline.blank?%>
             <span>
               <% @jalali = JalaliDate.to_jalali(task.deadline)%>
               <%= @jalali.year%>/<%= @jalali.month%>/<%= @jalali.day%> (<%= task.deadline_time.strftime('%H:%M')%>)
             </span>
+            <%end%>
           </td>
           <td>
             <%= link_to "/tasks/#{task.id}/destroy", remote: true, class: "icon" ,data: { confirm: t(:are_you_sure) } do %>
