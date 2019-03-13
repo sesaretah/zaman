@@ -233,6 +233,10 @@ fa:
             title: 'عنوان '
             details: 'توضیحات'
             p_type: 'نوع '
+        task:
+            title: 'عنوان '
+            details: 'توضیحات'
+            status_id: 'وضعیت'
         advertiser:
           title: 'عنوان '
           details: 'توضیحات'
@@ -255,6 +259,10 @@ fa:
     page_gap: "&hellip;"
     previous_label: "قبلی"
     next_label: "بعدی"
+  Task: 'وظیفه'
+  task: 'وظیفه'
+  filter: 'محدود کن'
+  gantt: 'گانت'
   saturday: 'شنبه '
   sunday: 'یکشنبه'
   monday: 'دوشنبه'

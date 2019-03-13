@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:edit, :update, :destroy]
+  before_action :set_task, only: [:edit, :update, :destroy, :show]
   before_action :extract_milestone, only: [:update, :create, :new, :edit]
-  before_action :extract_project, only: [:new, :list]
+  before_action :extract_project, only: [:new, :list, :show]
 
   def new
   end
@@ -13,11 +13,13 @@ class TasksController < ApplicationController
     @project = @milestone.project
   end
 
+  def show
+  end
+
   def create
-#    @time = Time.at(params[:unix_time].to_i / 1000)
-#    @task = 
     @task = Task.create(task_params)
     @project = @task.milestone.project
+    manage_deadline
     manage_assignments
     manage_events
   end
@@ -25,24 +27,31 @@ class TasksController < ApplicationController
   def update
     @task.update(task_params)
     @project = @task.milestone.project
+    manage_deadline
     manage_assignments
     manage_events
   end
 
+  def manage_deadline
+    @time = Time.at(params[:unix_time].to_i / 1000)
+    @task.user_id = current_user.id
+    @task.deadline = @time
+    @task.deadline_time = "#{params[:starts_at_hour]}:#{params[:starts_at_minutes]}"
+    @task.save
+  end
+
   def manage_assignments
+    for assignment in Assignment.where(task_id: @task.id)
+      assignment.destroy
+    end
     params.each do |param|
       if param[0].include?('assignee')
-        @assignments = Assignment.where(task_id: @task.id, user_id: param[1])
-        for assignment in @assignments
-          assignment.destroy
-        end
         @assignment = Assignment.create(task_id: @task.id, user_id: param[1])
       end
     end
   end
 
   def manage_events
-    @time = Time.at(params[:unix_time].to_i / 1000)
     @speardings = Spearding.where(speardable_type: 'Task', speardable_id: @task.id)
     for spearding in @speardings
       @previous_event = spearding.event
@@ -64,7 +73,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :details, :milestone_id, :deadline_time, :deadline)
+    params.require(:task).permit(:title, :details, :milestone_id, :deadline_time, :deadline, :status_id)
   end
 
   def extract_milestone

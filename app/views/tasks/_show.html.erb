@@ -1,0 +1,42 @@
+<div id='project-task'>
+  <div class='row'>
+    <div class='col-md-7 col-lg-7'>
+      <div class="form-group small">
+        <label class= "form-label" style='color: #7795c1;'><%=t :title%></label>
+        <div class="form-control-plaintext"><%= @task.title %></div>
+      </div>
+      <div class="form-group small">
+        <label class= "form-label" style='color: #7795c1;'><%=t :details%></label>
+        <div class="form-control-plaintext text-justify"><%= @task.details %></div>
+      </div>
+      <div class="form-group small">
+        <label class= "form-label" style='color: #7795c1;'><%=t :related_users %></label>
+        <% for assignment in Assignment.where(task_id: @task.id)%>
+        <span class="tag">
+          <span class="tag-avatar avatar" style="background-image: url('<%= assignment.user.profile.image(:tiny)%>')"></span>
+          <%= truncate(assignment.user.profile.name, length: 15)%>
+        </span>
+        <%end%>
+      </div>
+    </div>
+    <div class='col-md-5 col-lg-5'>
+      <div class="form-group small">
+        <label class= "form-label" style='color: #7795c1;'><%=t :milestone%></label>
+        <div class="form-control-plaintext"><%= @task.milestone.title %></div>
+      </div>
+      <div class="form-group small">
+        <label class= "form-label" style='color: #7795c1;'><%=t :deadline%></label>
+        <div class="form-control-plaintext text-justify">
+          <span>
+            <% @jalali = JalaliDate.to_jalali(@task.deadline)%>
+            <%= @jalali.year%>/<%= @jalali.month%>/<%= @jalali.day%> (<%= task.deadline_time.strftime('%H:%M')%>)
+          </span>
+        </div>
+      </div>
+      <div class="form-group small">
+        <label class= "form-label" style='color: #7795c1;'><%=t :status%></label>
+        <div class="form-control-plaintext text-justify"><%= @task.status.title %></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,7 +2,8 @@ module ApplicationHelper
   def scope_types
     @options = [
       [t(:subscription), 'Subscription'],
-      [t(:participation), 'Participation']
+      [t(:participation), 'Participation'],
+      [t(:task), 'Task']
     ]
     return @options
   end

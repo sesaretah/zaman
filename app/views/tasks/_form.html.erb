@@ -1,5 +1,5 @@
 <div id='project-task'>
-  <%= form_for task, remote: true, id: 'event-form' do |f| %>
+  <%= form_for task, remote: true, html:{id: 'task-form'} do |f| %>
 
   <div class="row">
     <div class="col-md-5">
@@ -14,7 +14,7 @@
     <div class="col-md-5">
       <div class="form-group">
         <label class="form-label"><%=t :milestone %></label>
-        <%= f.select(:milestone_id, options_for_select(Milestone.all.collect { |p| [ p.title, p.id ] }, task.milestone_id), {:include_blank => true} ,{class: "form-control"}) %>
+        <%= f.select(:milestone_id, options_for_select(Milestone.all.collect { |p| [ p.title, p.id ] }, task.milestone_id), {:include_blank => true} ,{class: "form-control", required: "true" }) %>
       </div>
     </div>
   </div>
@@ -25,7 +25,7 @@
       <div class="form-group">
         <label class="form-label"><%=t :deadline%></label>
         <%= hidden_field_tag :unix_time, nil%>
-        <input class="form-control deadline" />
+        <input class="form-control deadline"  value="<%= @task.deadline.strftime('%Y-%m-%d') rescue nil%>" />
         <script>
         $('.deadline').persianDatepicker({
           minDate: <%= Date.today.to_time.to_i * 1000%>,
@@ -45,12 +45,23 @@
         <label class="form-label"><%=t :deadline_time %></label>
         <div class="row gutters-xs">
           <div class="col-5">
-            <%= select_tag :starts_at_minutes, options_for_select((0..59).step(15).to_a.map{|s| ["#{s}", s]}), {class: "form-control"}%>
+            <% default_minute = @task ? @task.deadline_time.strftime('%M') :  Time.now.strftime('%M')%>
+            <%= select_tag :starts_at_minutes, options_for_select((0..59).step(15).to_a.map{|s| ["#{s}", s]}, default_minute), {class: "form-control"}%>
           </div>
           <div class="col-5">
-            <%= select_tag :starts_at_hour, options_for_select((0..23).step(1).to_a.map{|s| ["#{s}", s]}), {class: "form-control"}%>
+            <% default_hour = @task ? @task.deadline_time.strftime('%H') :   Time.now.strftime('%H')%>
+            <%= select_tag :starts_at_hour, options_for_select((0..23).step(1).to_a.map{|s| ["#{s}", s]}, default_hour), {class: "form-control"}%>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">
+      <div class="form-group">
+        <label class="form-label"><%=t :status %></label>
+        <%= f.select(:status_id, options_for_select(Status.where(scope_type: 'Task').collect { |p| [ p.title, p.id ] }, task.status_id), {} ,{class: "form-control", required: "true" }) %>
       </div>
     </div>
   </div>
@@ -60,8 +71,11 @@
       <div class="form-group">
         <label class="form-label"><%=t :related_users %></label>
         <% for participation in project.participations%>
+        <% if !@task.blank?%>
+        <% @assignment = Assignment.where(task_id: @task.id, user_id: participation.user.id).first%>
+        <%end%>
         <label class="custom-control custom-checkbox custom-control-inline">
-          <input type="checkbox" class="custom-control-input" name="assignee-<%= participation.user.id%>" value="<%= participation.user.id%>" >
+          <input type="checkbox" class="custom-control-input" name="assignee-<%= participation.user.id%>" value="<%= participation.user.id%>" <%if !@assignment.blank?%>checked<%end%>>
           <span class="custom-control-label">
             <span class="tag">
               <span class="tag-avatar avatar" style="background-image: url(<%= participation.user.profile.image('tiny') %>)"></span>
@@ -84,8 +98,19 @@
 
     <div class="col-md-2">
       <label class="form-label">&nbsp</label>
-      <button type="submit" id="modal-btn" class="btn btn-success"><%=t :submit %></button>
+      <button type="button" id="submit-btn" class="btn btn-success"><%=t :submit %></button>
     </div>
   </div>
   <% end %>
+  <script>
+  $( "#submit-btn" ).on('click', function(event) {
+    var form = $("#task-form");
+    if (form[0].checkValidity() === false) {
+      event.preventDefault()
+      event.stopPropagation()
+    }
+    form.addClass('was-validated');
+    $( "#task-form" ).submit();
+  });
+  </script>
 </div>

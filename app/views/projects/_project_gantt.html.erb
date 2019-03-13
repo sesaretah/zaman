@@ -1,0 +1,127 @@
+<div id='project-box'>
+  <div class="card-body">
+    <%= form_tag "/projects/gantt/#{project.id}", method: :get, remote: true do%>
+    <div class="row">
+      <div class="col-md-5">
+        <div class="form-group">
+          <label class="form-label"><%=t :start%></label>
+          <%= hidden_field_tag :start, nil%>
+          <input class="form-control start"  value="<%= 1.month.ago.strftime('%Y-%m-%d') rescue nil%>" />
+          <script>
+          $('.start').persianDatepicker({
+            altField: '#start',
+            format: 'YYYY/MM/DD',
+          });
+          </script>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-5">
+        <div class="form-group">
+          <label class="form-label"><%=t :end%></label>
+          <%= hidden_field_tag :end, nil%>
+          <input class="form-control end"  value="<%= Date.today.strftime('%Y-%m-%d') rescue nil%>" />
+          <script>
+          $('.end').persianDatepicker({
+            altField: '#end',
+            format: 'YYYY/MM/DD',
+          });
+          </script>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer text-right">
+      <button type="submit" class="btn btn-sm btn-primary"><%=t :filter%></button>
+    </div>
+    <%end%>
+    <div class='row'>
+      <canvas id="myChart"></canvas>
+      <script>
+      var ctx = document.getElementById("myChart");
+      var days = <%= raw @days.split(',')%>
+      var tasks = <%= raw @tasks.pluck(:title).split(',')%>
+      var scatterChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          datasets: [
+            <% @i = 1%>
+            <% for task in @tasks%>
+            {
+              label: '',
+              backgroundColor: "rgba(246,156,85,1)",
+              borderColor: "rgba(246,156,85,1)",
+              fill: false,
+              borderWidth : 15,
+              pointRadius : 0,
+              data: [
+                {
+                  x: <%= (task.created_at.to_date - @start).to_i %>,
+                  y: <%= @i%>
+                }, {
+                  x: <%if (task.deadline.to_date - @end).to_i > 0%><%= @days.length%><%else%><%= (task.deadline - @start).to_i + 0.5%><%end%>,
+                  y: <%= @i%>
+                }
+              ]
+            },
+            <% @i += 1%>
+            <%end%>
+          ]
+        },
+        options: {
+          hover: {
+            mode: 'nearest',
+            intersect: true
+          },
+
+          legend : {
+            display : false
+          },
+          scales: {
+            xAxes: [{
+              type: 'linear',
+              scaleLabel: {
+                display: true
+              },
+              position: 'bottom',
+
+              ticks : {
+                fontFamily: "iransans",
+                callback: function(label, index, labels) {
+                  return days[0][label];
+                },
+                stepSize : 1,
+                min: 1,
+                max: <%= @days.length%>,
+
+              }
+            }],
+            yAxes : [{
+              scaleLabel : {
+                display : false
+              },
+              ticks : {
+                fontFamily: "iransans",
+                callback: function(label, index, labels) {
+                  if (label != 0){
+                    if (tasks[0][label - 1]){
+                        return tasks[0][label - 1].substring(0,10);
+                    }
+                }
+
+                },
+                beginAtZero :true,
+                stepSize : 1,
+                max : <%= @tasks.length + 1%>
+              }
+            }]
+          }
+        }
+      });
+
+      </script>
+    </div>
+  </div>
+</div>

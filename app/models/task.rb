@@ -3,7 +3,9 @@ class Task < ActiveRecord::Base
 
   belongs_to :milestone
   has_many :assignments
-  
+  belongs_to :status
+  has_many :discussions
+
   has_many :speardings, :as => :speardable, :dependent => :destroy
   has_many :events, :through => :speardings
 

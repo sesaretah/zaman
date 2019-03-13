@@ -9,21 +9,21 @@
           <td><i class="fas fa-hashtag"></i></td>
           <td class="w-50"><%=t :title %></td>
           <td></td>
-          <td><%=t :created_at %></td>
+          <td><%=t :deadline %></td>
           <td></td>
         </tr>
       </thead>
       <tbody>
         <% @i =1%>
-        <% for task in milestone.tasks%>
+        <% for task in milestone.tasks.order('deadline asc')%>
         <tr>
           <td><%= @i%><% @i += 1%></td>
           <td ><%= task.title%></td>
           <td></td>
           <td>
             <span>
-              <% @jalali = JalaliDate.to_jalali(milestone.created_at)%>
-              <%= @jalali.year%>/<%= @jalali.month%>/<%= @jalali.day%>
+              <% @jalali = JalaliDate.to_jalali(task.deadline)%>
+              <%= @jalali.year%>/<%= @jalali.month%>/<%= @jalali.day%> (<%= task.deadline_time.strftime('%H:%M')%>)
             </span>
           </td>
           <td>
@@ -32,6 +32,9 @@
             <%end%>
             <%= link_to "/tasks/#{task.id}/edit?milestone_id=#{milestone.id}", remote: true, class: "icon" do %>
             <i class="fe fe-edit"></i>
+            <%end%>
+            <%= link_to "/tasks/#{task.id}", remote: true, class: "icon" do %>
+            <i class="fe fe-play"></i>
             <%end%>
           </td>
         </tr>

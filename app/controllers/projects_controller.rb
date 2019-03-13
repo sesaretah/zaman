@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy, :milestones, :tasks, :participants, :participate, :unparticipate]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :milestones, :tasks, :participants, :participate, :unparticipate, :gantt]
 
   def participate
     if @project.p_type == 'Public'
@@ -18,6 +18,25 @@ class ProjectsController < ApplicationController
 
   def participants
     @participations = Participation.where(project_id: @project.id)
+  end
+
+  def gantt
+    if !params[:start].blank?
+      @start = Time.at(params[:start].to_i / 1000).to_date
+    else
+      @start = 1.month.ago.to_date
+    end
+    if !params[:end].blank?
+      @end = Time.at(params[:end].to_i / 1000).to_date
+    else
+      @end = Date.today
+    end
+    @tasks = Task.where('created_at >= ? AND deadline <= ?', @start, @end)
+    @days = []
+    for day in @start..@end
+      @jalali = JalaliDate.to_jalali(day)
+      @days << "#{@jalali.year}/#{@jalali.month}/#{@jalali.day}"
+    end
   end
 
   def tasks

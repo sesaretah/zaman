@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190210154052) do
+ActiveRecord::Schema.define(version: 20190312153609) do
 
   create_table "advertisers", force: :cascade do |t|
     t.string   "uuid",       limit: 255
@@ -36,6 +36,16 @@ ActiveRecord::Schema.define(version: 20190210154052) do
 
   add_index "assignments", ["task_id"], name: "index_assignments_on_task_id", using: :btree
   add_index "assignments", ["uuid"], name: "index_assignments_on_uuid", using: :btree
+
+  create_table "discussions", force: :cascade do |t|
+    t.text     "content",    limit: 65535
+    t.string   "uuid",       limit: 255
+    t.integer  "tasks_id",   limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "discussions", ["uuid"], name: "index_discussions_on_uuid", unique: true, using: :btree
 
   create_table "events", force: :cascade do |t|
     t.date     "event_date"
@@ -168,9 +178,11 @@ ActiveRecord::Schema.define(version: 20190210154052) do
     t.datetime "updated_at",                  null: false
     t.text     "details",       limit: 65535
     t.time     "deadline_time"
+    t.string   "status_id",     limit: 255
   end
 
   add_index "tasks", ["milestone_id"], name: "index_tasks_on_milestone_id", using: :btree
+  add_index "tasks", ["status_id"], name: "index_tasks_on_status_id", using: :btree
   add_index "tasks", ["uuid"], name: "index_tasks_on_uuid", unique: true, using: :btree
 
   create_table "uploads", force: :cascade do |t|

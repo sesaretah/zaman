@@ -3,12 +3,13 @@
   <div class='card-inner'>
     <div class='row'>
       <div class='col-md-12'>
-        <%= link_to "/tasks/new?project_id=#{project.id}", remote: true, class: "btn btn-sm btn-secondary" do %>
-        <i class="fe fe-plus"></i> <%=t :new_task %>
-        <%end%>
         <%= link_to "/tasks/list/1?project_id=#{project.id}", remote: true, class: "btn btn-sm btn-secondary" do %>
         <i class="fe fe-list"></i> <%=t :tasks_list %>
         <%end%>
+        <%= link_to "/tasks/new?project_id=#{project.id}", remote: true, class: "btn btn-sm btn-secondary" do %>
+        <i class="fe fe-plus"></i> <%=t :new_task %>
+        <%end%>
+
       </div>
     </div>
   </div>

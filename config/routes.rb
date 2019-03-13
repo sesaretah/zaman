@@ -7,10 +7,11 @@ Rails.application.routes.draw do
     devise_for :users, :controllers => {:registrations => "registrations", sessions: "sessions"}
   resources :uploads
   resources :advertisers
+  resources :discussion
   root 'home#index'
   get '/calendar/day/:unix_time', to: "calendar#day"
   get '/calendar/week/:unix_time', to: "calendar#week"
-  
+
   post '/events', to: "events#create"
 
   get '/events/:id/delete', to: "events#destroy"
@@ -45,4 +46,5 @@ Rails.application.routes.draw do
   get '/projects/details/:id', to: 'projects#details'
   get '/projects/events/:id', to: 'projects#events'
   get '/projects/tasks/:id', to: 'projects#tasks'
+  get '/projects/gantt/:id', to: 'projects#gantt'
 end

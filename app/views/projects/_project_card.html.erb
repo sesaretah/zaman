@@ -2,6 +2,9 @@
   <div class="card-header">
     <h3 class="card-title"></h3>
     <div class="card-options">
+      <%= link_to "/projects/gantt/#{project.id}", remote: true, class: "btn btn-sm btn-secondary" do %>
+      <i class="fas fa-chart-line"></i> <%=t :gantt%>
+      <%end%>
       <% if !project.participated(current_user)%>
       <%= link_to "/projects/participate/#{project.id}", remote: true, class: "btn btn-sm btn-secondary", data: { confirm: t(:are_you_sure) }  do %>
       <i class="fas fa-link"></i> <%=t :participate%>
