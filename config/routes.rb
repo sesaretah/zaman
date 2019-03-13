@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     devise_for :users, :controllers => {:registrations => "registrations", sessions: "sessions"}
   resources :uploads
   resources :advertisers
-  resources :discussion
+  resources :discussions
   root 'home#index'
   get '/calendar/day/:unix_time', to: "calendar#day"
   get '/calendar/week/:unix_time', to: "calendar#week"

@@ -43,4 +43,56 @@
       </div>
     </div>
   </div>
+  <hr class="mt-1 mb-1" />
+  <div class="col-12 pt-2">
+    <ul class="list-group card-list-group pr-4">
+      <%for discussion in @task.discussions%>
+      <li class="list-group-item p-1">
+        <div class="media">
+          <div class="media-object avatar avatar-md" style="background-image: url(<%= discussion.user.profile.image('thumb')%>)"></div>
+          <div class="media-body">
+            <div class="media-heading">
+              <small class="float-right text-muted">
+                <%= link_to discussion, method: :delete, remote: true ,class: "icon" ,data: { confirm: t(:are_you_sure) } do %>
+                <i class="fe fe-trash" style="vertical-align:-2px"></i>
+                <%end%>
+              </small>
+              <small class="time float-right text-muted"> <%= discussion.created_at%> </small>
+
+              <span class="small"><%= discussion.user.profile.name%></span>
+            </div>
+            <div class="img-flex">
+              <%= sanitize discussion.content %>
+            </div>
+          </div>
+        </div>
+
+      </li>
+      <%end%>
+      <script>
+      $( ".time" ).each(function( index ) {
+        $( this ).text(moment($( this ).text()).fromNow());
+      });
+      </script>
+    </ul>
+  </div>
+      <div class="col-12 pt-2">
+    <%= form_for Discussion.new, remote: true do |f|%>
+    <%= hidden_field_tag :task_id, @task.id%>
+    <%= hidden_field_tag :content%>
+    <div id='toolbar' style='display:none;'></div>
+    <trix-editor input="content" toolbar="toolbar"></trix-editor>
+    <%end%>
+
+    <div class="text-right mt-2 mb-2">
+      <button id='submit-btn' type="submit" class="btn btn-sm btn-primary"><%=t :submit%></button>
+    </div>
+    <script>
+    $( "#submit-btn" ).click(function() {
+      console.log('clicked');
+      $( "#new_discussion" ).submit();
+    });
+    </script>
+  </div>
+
 </div>

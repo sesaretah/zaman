@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_one :profile
   has_many :advertisers, :through => :subscriptions
   has_many :subscriptions, dependent: :destroy
+  has_many :discussions
 
   def email_required?
     false

@@ -1,12 +1,13 @@
 class DiscussionsController < ApplicationController
   before_action :set_discussion, only: [:edit, :update, :destroy, :show]
-  before_action :extract_task, only: [:new, :list, :show]
+  before_action :extract_task, only: [:destroy]
 
   def create
     @discussion = Discussion.create(content: params[:content], user_id: current_user.id, task_id: params[:task_id])
   end
 
   def destroy
+    @task = @discussion.task
     @discussion.destroy
   end
 

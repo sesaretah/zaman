@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190312153609) do
+ActiveRecord::Schema.define(version: 20190313073606) do
 
   create_table "advertisers", force: :cascade do |t|
     t.string   "uuid",       limit: 255
@@ -43,8 +43,11 @@ ActiveRecord::Schema.define(version: 20190312153609) do
     t.integer  "tasks_id",   limit: 4
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.integer  "user_id",    limit: 4
+    t.string   "task_id",    limit: 255
   end
 
+  add_index "discussions", ["task_id"], name: "index_discussions_on_task_id", using: :btree
   add_index "discussions", ["uuid"], name: "index_discussions_on_uuid", unique: true, using: :btree
 
   create_table "events", force: :cascade do |t|

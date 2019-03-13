@@ -2,6 +2,7 @@ class Discussion < ActiveRecord::Base
   self.primary_key = 'uuid'
 
   belongs_to :task
+  belongs_to :user
 
   before_create :set_uuid
   def set_uuid
