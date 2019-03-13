@@ -45,12 +45,20 @@
         <label class="form-label"><%=t :deadline_time %></label>
         <div class="row gutters-xs">
           <div class="col-5">
-            <% default_minute = @task ? @task.deadline_time.strftime('%M') :  Time.now.strftime('%M')%>
-            <%= select_tag :starts_at_minutes, options_for_select((0..59).step(15).to_a.map{|s| ["#{s}", s]}, default_minute), {class: "form-control"}%>
+            <% if !@task.deadline_time.blank?%>
+              <% default_minute = @task ? @task.deadline_time.strftime('%M') :  Time.now.strftime('%M')%>
+              <%= select_tag :starts_at_minutes, options_for_select((0..59).step(15).to_a.map{|s| ["#{s}", s]}, default_minute), {class: "form-control"}%>
+            <%else%>
+              <%= select_tag :starts_at_minutes, options_for_select((0..59).step(15).to_a.map{|s| ["#{s}", s]}), {class: "form-control"}%>
+            <%end%>
           </div>
           <div class="col-5">
-            <% default_hour = @task ? @task.deadline_time.strftime('%H') :   Time.now.strftime('%H')%>
-            <%= select_tag :starts_at_hour, options_for_select((0..23).step(1).to_a.map{|s| ["#{s}", s]}, default_hour), {class: "form-control"}%>
+            <% if !@task.deadline_time.blank?%>
+              <% default_hour = @task ? @task.deadline_time.strftime('%H') :   Time.now.strftime('%H')%>
+              <%= select_tag :starts_at_hour, options_for_select((0..23).step(1).to_a.map{|s| ["#{s}", s]}, default_hour), {class: "form-control"}%>
+            <%else%>
+              <%= select_tag :starts_at_hour, options_for_select((0..23).step(1).to_a.map{|s| ["#{s}", s]}), {class: "form-control"}%>            <%end%>
+            <%end%>
           </div>
         </div>
       </div>
